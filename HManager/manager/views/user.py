@@ -89,13 +89,13 @@ def get_user_info(request):
             princ=kadm.getprinc(un)
             princ='\n'.join([
                 "用户名 : %s" % princ.principal,
-                "最近更改密码时间 : %s" % princ.last_pwd_change,
-                "最近成功登录时间 : %s" % princ.last_success,
-                "最近登录失败时间 : %s" % princ.last_failure,
-                "过期时间 : %s" % princ.expire,
-                "密码过期时间 : %s" % princ.pwexpire,
-                "票据最长生命周期 : %s" % princ.maxlife,
-                "票据最长更新时间 : %s" % princ.maxrenewlife,
+                "最近更改密码时间 : %s" % princ.last_pwd_change or 'Never',
+                "最近成功登录时间 : %s" % princ.last_success or 'Never',
+                "最近登录失败时间 : %s" % princ.last_failure or 'Never',
+                "过期时间 : %s" % princ.expire or 'Never',
+                "密码过期时间 : %s" % princ.pwexpire or 'Never',
+                "票据最长生命周期 : %s" % princ.maxlife or 'Never',
+                "票据最长更新时间 : %s" % princ.maxrenewlife or 'Never',
                 ])
             ret={'status':1,'princ':princ}
     except Exception as e:
