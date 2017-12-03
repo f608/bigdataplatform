@@ -32,5 +32,5 @@ urlpatterns = [
 
     url(r'^kerberos/user/user_info/',user.get_user_info),
     url(r'^kerberos/user/del/',user.del_user),
-    url(r'^kerberos/user/create_user/',user.create_user),
+    url(r'^kerberos/user/create_user/$',user.create_user),
 ]
