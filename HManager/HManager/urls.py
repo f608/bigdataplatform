@@ -25,5 +25,7 @@ urlpatterns = [
     #ajax路由
     url(r'^kerberos/verify',user.kerberos_verify),
     url(r'^kerberos/kdc/',user.kdc_ops),
-    url(r'^kerberos/client/',user.client_ops)
+    url(r'^kerberos/client/',user.client_ops),
+
+    url(r'^kerberos/user/admin_login/$',user.kadmin_login),
 ]

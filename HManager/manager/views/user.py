@@ -3,6 +3,7 @@ from django.http import Http404
 from django.views.decorators.csrf import csrf_exempt
 import json
 import subprocess
+import kadmin
 
 def usermanage(request):
     '''用户管理界面'''
@@ -54,4 +55,17 @@ def client_ops(request):
     else:
         ret['status']=1
         ret['output']='无效命令'
+    return HttpResponse(json.dumps(ret))
+
+@csrf_exempt
+def kadmin_login(request):
+    '''ajax/用户页面管理员登录'''
+    un=request.POST.get('un')
+    psd=request.POST.get('psd')
+    kadm=kadmin.init_with_password(un,psd)
+    request.session['admin']=kadm
+    if kadm:
+        ret = {'status': 1, 'un':un}
+    else:
+        ret = {'status': 0}
     return HttpResponse(json.dumps(ret))
