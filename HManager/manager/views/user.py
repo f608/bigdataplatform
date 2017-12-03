@@ -63,11 +63,15 @@ def kadmin_login(request):
     '''ajax/用户页面管理员登录'''
     un=request.POST.get('un')
     psd=request.POST.get('psd')
-    kadm=kadmin.init_with_password(un,psd)
-    
-    if kadm:
+    try:
+        kadm=kadmin.init_with_password(un,psd)
         ret = {'status': 1, 'un':un}
         request.session['admin']={'un':un,'psd':psd}
-    else:
+    except Exception:
         ret = {'status': 0}
     return HttpResponse(json.dumps(ret))
+
+def kadmin_logout(request):
+    if request.session['admin']:
+        del request.session['admin']
+    return redirect('/kerberos/usermanage/')

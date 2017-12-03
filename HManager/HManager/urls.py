@@ -20,7 +20,7 @@ from manager.views import homepage,user
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',homepage.home),
-    url(r'^usermanage/$',user.usermanage),
+    url(r'^kerberos/usermanage/$',user.usermanage),
     url(r'^kerberos/$',user.kerberosmanage),
     #ajax路由
     url(r'^kerberos/verify',user.kerberos_verify),
@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^kerberos/client/',user.client_ops),
 
     url(r'^kerberos/user/admin_login/$',user.kadmin_login),
+    url(r'^kerberos/user/admin_logout/$',user.kadmin_logout),
 ]
