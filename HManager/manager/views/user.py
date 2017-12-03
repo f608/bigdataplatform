@@ -114,7 +114,7 @@ def create_user(request):
     return HttpResponse(json.dumps(ret))
 
 def changepsd(request):
-     ret={'status':0}
+    ret={'status':0}
     try:
         if request.session.get('admin'):
             kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
