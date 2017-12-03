@@ -73,13 +73,14 @@
                     <h4 class="modal-title" id="myModalLabel">修改密码</h4>
                 </div>
                 <div class="modal-body">
-                    <form>                       
-                        新密码：  <id="rnpsd" input type="text" placeholder="请输入修改后密码"><br><br>
+                    <form>   
+                        用户: <input id="rnun" type="text" readonly="readonly"><br><br>               
+                        新密码：  <input id="rnpsd" type="text" placeholder="请输入修改后密码"><br><br>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">确定</button>
+                    <button id="confirm_chgpsd" type="button" class="btn btn-primary">确定</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -123,7 +124,7 @@
             <td>{{ forloop.counter }}</td>
             <td style="font-size:13pt">{{ user }}</td>
             <td>
-                <button class="btn blue" data-toggle="modal" data-target="#modifypassword" onclick="changepsd('{{ user }}')">修改密码</button>
+                <button class="btn blue" data-toggle="modal" data-target="#modifypassword" onclick="chgpsd_modal('{{ user }}')">修改密码</button>
                 <a class="btn red" href="/kerberos/user/del/?un={{ user }}">删除</a>
                 <button class="btn green" data-toggle="modal" data-target="#userinformation" onclick="userinfo('{{ user }}')">详细信息</button>
             </td>
@@ -241,8 +242,13 @@
 		})
     });
 
-    function changepsd(user){
-        psd=$('#rnpsd');
+    function chgpsd_modal(user){
+        $("#rnun").val(user);
+    };
+
+    $("#comfirm_chgpsd").click(function(){
+        user=$("#rnun").val();
+        psd=$('#rnpsd').val();
 		$.ajax({
 			type:'GET',
 			url:'/kerberos/user/chgpsd/?un='+user+";?psd="+psd,
@@ -262,7 +268,7 @@
 				$("#loadgif").hide();
 			}
 		})
-    };
+    });
 
     function userinfo(un){
         $.ajax({
