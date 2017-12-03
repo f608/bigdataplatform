@@ -224,8 +224,10 @@
 			},
 			success:function(ret){
                 if(ret.status){
+                    alert(ret.princ);
                     $("#user_info_display").val(ret.princ);
                 }else{
+                    alert(ret.princ);
                     $("#user_info_display").val("获取信息失败");
                 }
 			},
