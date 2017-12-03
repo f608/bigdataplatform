@@ -251,7 +251,7 @@
         psd=$("#rnpsd").val();
 		$.ajax({
 			type:'GET',
-			url:'/kerberos/user/chgpsd/?un='+user+";?psd="+psd,
+			url:'/kerberos/user/chgpsd/?un='+user+"&psd="+psd,
 			dataType:'JSON',
 			beforeSend:function(){
 				$("#loadgif").show();
