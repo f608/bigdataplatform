@@ -93,7 +93,7 @@ def get_user_info(request):
                 "最近成功登录时间 : %s" % princ.last_success,
                 "最近登录失败时间 : %s" % princ.last_failure,
                 "过期时间 : %s" % princ.expire,
-                "密码过期时间 : %s" % princ.pwdexpire,
+                "密码过期时间 : %s" % princ.pwexpire,
                 "票据最长生命周期 : %s" % princ.maxlife,
                 "票据最长更新时间 : %s" % princ.maxrenewlife,
                 ])
