@@ -80,6 +80,7 @@ def kadmin_logout(request):
     return redirect('/kerberos/usermanage/')
 
 def get_user_info(request):
+    print('hahaha')
     if request.session.get('admin'):
         print(request.session['admin']['un'],request.session['admin']['psd'])
         kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
