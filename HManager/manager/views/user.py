@@ -71,7 +71,7 @@ def kadmin_login(request):
         ret = {'status': 1, 'un':un}
         request.session['admin']={'un':un,'psd':psd}
     except Exception:
-        ret = {'status': 0}
+        ret = {'status': 0,'err':'密码错误'}
     return HttpResponse(json.dumps(ret))
 
 def kadmin_logout(request):
@@ -91,7 +91,7 @@ def get_user_info(request):
                 "用户名 : %s" % princ.principal,
                 "最近更改密码时间 : %s" % princ.last_pwd_change,
                 "最近成功登录时间 : %s" % princ.last_success,
-                "最近登录失败时间 : %s" % princ.last,
+                "最近登录失败时间 : %s" % princ.last_failure,
                 "过期时间 : %s" % princ.expire,
                 "密码过期时间 : %s" % princ.pwdexpire,
                 "票据最长生命周期 : %s" % princ.maxlife,
