@@ -87,7 +87,8 @@ def get_user_info(request):
             kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
             un=request.GET.get('un')
             princ=kadm.getprinc(un)
-            ret={'status':1,'princ':str(princ)}
+            princ='\n'.join(["%s : %s" % item for item in princ.__dict__.items()])
+            ret={'status':1,'princ':princ}
     except Exception:
         ret['err']='用户信息读取失败'
     return HttpResponse(json.dumps(ret))
@@ -120,6 +121,7 @@ def changepsd(request):
             kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
             un=request.GET.get('un')
             psd=request.GET.get('psd')
+            print(un,psd)
             princ=kadm.getprinc(un)
             princ.change_password(psd)
             ret['status']=1
