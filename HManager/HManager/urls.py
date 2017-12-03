@@ -29,4 +29,7 @@ urlpatterns = [
 
     url(r'^kerberos/user/admin_login/$',user.kadmin_login),
     url(r'^kerberos/user/admin_logout/$',user.kadmin_logout),
+
+    url(r'^kerberos/user/user_info/',user.get_user_info),
+    url(r'^kerberos/user/del/',user.del_user),
 ]
