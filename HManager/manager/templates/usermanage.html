@@ -47,15 +47,14 @@
                     <h4 class="modal-title" id="myModalLabel">新建用户</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="">
-                        用户名：<input type="text" name="user" placeholder="请输入用户名"><br><br>             
-                        用户密码：  <input type="password" name="password" placeholder="请输入密码"><br><br>
-                        重复密码：  <input type="password" name="password" placeholder="请输入密码">
+                    <form>
+                        用户名：<input id='nuername' type="text" placeholder="请输入用户名"><br><br>             
+                        用户密码：  <input id="npsd" type="text" placeholder="请输入密码"><br><br>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">创建</button>
+                    <button id="create_user" type="button" class="btn btn-primary">创建</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -206,6 +205,35 @@
                 if(ret.status){
                     alert("管理员"+ret.un+"登录成功");
                     location.reload();
+                }else{
+                    alert(ret.err);
+                }
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+    });
+
+    $("#create_user").click(function(){
+        un=$('#nusername').val();
+		psd=$('#npsd').val();
+		$.ajax({
+			type:'POST',
+			url:'/kerberos/user/create_user/',
+			data:{
+				un:un,
+				psd:psd
+			},
+			dataType:'JSON',
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+                if(ret.status){
+                    location.reload();
+                }else{
+                    alert(ret.err);
                 }
 			},
 			complete:function(){
@@ -224,10 +252,9 @@
 			},
 			success:function(ret){
                 if(ret.status){
-                    alert('哈哈');
                     $("#user_info_display").val(ret.princ);
                 }else{
-                    $("#user_info_display").val("获取信息失败");
+                    $("#user_info_display").val(ret.err);
                 }
 			},
 			complete:function(){

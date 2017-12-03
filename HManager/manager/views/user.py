@@ -11,7 +11,7 @@ def usermanage(request):
     if request.method=='GET':
         if request.session.get('admin'):
             kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
-            users=kadm.principals()
+            users=list(kadm.principals())
         return render(request,'usermanage.html',locals())
 
 def kerberosmanage(request):
@@ -80,15 +80,16 @@ def kadmin_logout(request):
     return redirect('/kerberos/usermanage/')
 
 def get_user_info(request):
-    print('hahaha')
-    if request.session.get('admin'):
-        print(request.session['admin']['un'],request.session['admin']['psd'])
-        kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
-        un=request.GET.get('un')
-        princ=kadm.getprinc(un)
-        ret={'status':1,'princ':str(princ)}
-    else:
-        ret={'status':0}
+    ret={'status':0}
+    try:
+        if request.session.get('admin'):
+            print(request.session['admin']['un'],request.session['admin']['psd'])
+            kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
+            un=request.GET.get('un')
+            princ=kadm.getprinc(un)
+            ret={'status':1,'princ':str(princ)}
+    except Exception:
+        ret['err']='用户信息读取失败'
     return HttpResponse(json.dumps(ret))
 
 def del_user(request):
@@ -97,3 +98,16 @@ def del_user(request):
         un=request.GET.get('un')
         #暂未实现
     return redirect('/kerberos/usermanage/')
+
+@csrf_exempt
+def create_user(request):
+    ret={'status':0}
+    try:
+        if request.session.get('admin'):
+            kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
+            un=request.POST.get('un')
+            psd=request.POST.get('psd')
+            kadm.ank(un,psd)
+            ret['status']=1
+    except Exception:
+        ret['err']='用户创建失败'
