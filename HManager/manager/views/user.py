@@ -101,6 +101,7 @@ def del_user(request):
 
 @csrf_exempt
 def create_user(request):
+    return render('haha')
     ret={'status':0}
     try:
         if request.session.get('admin'):
