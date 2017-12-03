@@ -124,9 +124,9 @@
             <td>{{ forloop.counter }}</td>
             <td style="font-size:13pt">{{ user }}</td>
             <td>
-                <button class="btn blue" data-toggle="modal" data-target="#modifypassword" onclick="chgpsd_modal('{{ user }}')">修改密码</button>
-                <a class="btn red" href="/kerberos/user/del/?un={{ user }}">删除</a>
-                <button class="btn green" data-toggle="modal" data-target="#userinformation" onclick="userinfo('{{ user }}')">详细信息</button>
+                <button class="btn blue btn-sm" data-toggle="modal" data-target="#modifypassword" onclick="chgpsd_modal('{{ user }}')">修改密码</button>
+                <a class="btn red btn-sm" href="/kerberos/user/del/?un={{ user }}">删除</a>
+                <button class="btn green btn-sm" data-toggle="modal" data-target="#userinformation" onclick="userinfo('{{ user }}')">详细信息</button>
             </td>
         </tr>
         {% endfor %}
