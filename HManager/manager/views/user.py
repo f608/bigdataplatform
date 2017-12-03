@@ -88,7 +88,7 @@ def get_user_info(request):
             un=request.GET.get('un')
             princ=kadm.getprinc(un)
             princ='\n'.join([
-                "用户名 : %s" % princ.principal， 
+                "用户名 : %s" % princ.principal,
                 "最近更改密码时间 : %s" % princ.last_pwd_change,
                 "最近成功登录时间 : %s" % princ.last_success,
                 "最近登录失败时间 : %s" % princ.last,
