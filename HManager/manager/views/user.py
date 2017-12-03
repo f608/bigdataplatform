@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import subprocess
 import kadmin
+import pickle
 
 def usermanage(request):
     '''用户管理界面'''
@@ -66,8 +67,7 @@ def kadmin_login(request):
     
     if kadm:
         ret = {'status': 1, 'un':un}
-        request.session['admin']=kadm
-        print(kadm)
+        request.session['admin']=pickle.dumps(kadm)
     else:
         ret = {'status': 0}
     return HttpResponse(json.dumps(ret))
