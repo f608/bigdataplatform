@@ -63,9 +63,11 @@ def kadmin_login(request):
     un=request.POST.get('un')
     psd=request.POST.get('psd')
     kadm=kadmin.init_with_password(un,psd)
-    request.session['admin']=kadm
+    
     if kadm:
         ret = {'status': 1, 'un':un}
+        request.session['admin']=kadm
+        print(kadm)
     else:
         ret = {'status': 0}
     return HttpResponse(json.dumps(ret))
