@@ -74,7 +74,8 @@
                     <h4 class="modal-title" id="myModalLabel">修改密码</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="">                       
+                    <form action="">
+                       
                         新密码：  <input type="password" name="password" placeholder="请输入修改后密码"><br><br>
                         再次输入新密码：  <input type="password" name="password" placeholder="请输入修改后密码">
                     </form>
@@ -117,22 +118,38 @@
     <thead>
         <tr>
             <th style="width:20%">编号</th>
-            <th style="width:30%"> 用户</th>
-            <th style="width:50%">操作</th>
+            <th style="width:40%"> 用户</th>
+            <th style="width:40%">操作</th>
         </tr>
     </thead>
     <tbody>
-        {% for user in users %}
         <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ user }}</td>
+            <td>1</td>
+            <td>Alice</td>
             <td>
                 <button class="btn blue" data-toggle="modal" data-target="#modifypassword">修改</button>
-                <button class="btn red">删除</button>
+                <button class="btn red" data-toggle="modal" data-target="#deleteuser">删除</button>
                 <button class="btn green" data-toggle="modal" data-target="#userinformation">详细信息</button>
             </td>
         </tr>
-        {% endfor %}
+        <tr>
+            <td>2</td>
+            <td>Bob</td>
+            <td>
+                <button class="btn blue">修改</button>
+                <button class="btn red">删除</button>
+                <button class="btn green">详细信息</button>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Eve</td>
+            <td>
+                <button class="btn blue">修改</button>
+                <button class="btn red">删除</button>
+                <button class="btn green">详细信息</button>
+            </td>
+        </tr>
     </tbody>
 </table>
 {% endif %}	
