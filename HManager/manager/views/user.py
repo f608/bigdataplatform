@@ -89,7 +89,8 @@ def get_user_info(request):
             princ=kadm.getprinc(un)
             princ='\n'.join(["%s : %s" % item for item in princ.__dict__.items()])
             ret={'status':1,'princ':princ}
-    except Exception:
+    except Exception as e:
+        print(e)
         ret['err']='用户信息读取失败'
     return HttpResponse(json.dumps(ret))
 

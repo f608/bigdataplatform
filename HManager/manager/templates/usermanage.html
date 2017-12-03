@@ -248,7 +248,7 @@
 
     $("#confirm_chgpsd").click(function(){
         user=$("#rnun").val();
-        psd=$('#rnpsd').val();
+        psd=$("#rnpsd").val();
 		$.ajax({
 			type:'GET',
 			url:'/kerberos/user/chgpsd/?un='+user+";?psd="+psd,
