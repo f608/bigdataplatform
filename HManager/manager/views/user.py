@@ -67,7 +67,7 @@ def kadmin_login(request):
     
     if kadm:
         ret = {'status': 1, 'un':un}
-        request.session['admin']=pickle.dumps(kadm)
+        request.session['admin']={'un':un,'psd':psd}
     else:
         ret = {'status': 0}
     return HttpResponse(json.dumps(ret))
