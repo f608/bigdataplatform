@@ -87,7 +87,16 @@ def get_user_info(request):
             kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
             un=request.GET.get('un')
             princ=kadm.getprinc(un)
-            princ='\n'.join(["%s : %s" % item for item in princ.__dict__.items()])
+            princ='\n'.join([
+                "用户名 : %s" % princ.principal， 
+                "最近更改密码时间 : %s" % princ.last_pwd_change,
+                "最近成功登录时间 : %s" % princ.last_success,
+                "最近登录失败时间 : %s" % princ.last,
+                "过期时间 : %s" % princ.expire,
+                "密码过期时间 : %s" % princ.pwdexpire,
+                "票据最长生命周期 : %s" % princ.maxlife,
+                "票据最长更新时间 : %s" % princ.maxrenewlife,
+                ])
             ret={'status':1,'princ':princ}
     except Exception as e:
         print(e)
