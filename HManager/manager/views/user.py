@@ -85,7 +85,7 @@ def get_user_info(request):
         kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
         un=request.GET.get('un')
         princ=kadm.getprinc(un)
-        ret={'status':1,'princ':princ}
+        ret={'status':1,'princ':str(princ)}
     else:
         ret={'status':0}
     return HttpResponse(json.dumps(ret))
