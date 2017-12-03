@@ -1,0 +1,238 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static "plugins/bootstrap-datatable/dataTables.bootstrap.css" %}" />
+{% endblock %}
+{% block content %}
+<div><!-- 所有按钮 -->
+    <button class="btn btn-primary" data-toggle="modal" data-target="#adminlogin">
+            管理员登录
+        </button>
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="adminlogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">管理员登录</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            用户名：<input id="username" type="text" name="user" placeholder="请输入用户名"><br><br>             
+                            用户密码：<input id="psd" type="password" name="password" placeholder="请输入密码"><br><br>
+      
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button id="admin_login" type="button" class="btn btn-primary">登录</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    {% if request.session.admin %}
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        新建用户
+    </button>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">新建用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        用户名：<input type="text" name="user" placeholder="请输入用户名"><br><br>             
+                        用户密码：  <input type="password" name="password" placeholder="请输入密码"><br><br>
+                        重复密码：  <input type="password" name="password" placeholder="请输入密码">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">创建</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="modifypassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="">                       
+                        新密码：  <input type="password" name="password" placeholder="请输入修改后密码"><br><br>
+                        再次输入新密码：  <input type="password" name="password" placeholder="请输入修改后密码">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="userinformation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">查询用户信息</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="user_info_display" cols="100" rows="7" style="font-size:13pt" readonly="readonly"></textarea>	
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <button onclick="window.location.reload()" type="submit" class="btn btn-primary">刷新</button>
+    <a class="btn red" href='/kerberos/user/admin_logout/'>登出</a>
+</div><!-- 所有按钮 -->
+
+<table class="table table-striped table-bordered table-hover" id="user_table">  
+    <thead>
+        <tr>
+            <th style="width:20%">编号</th>
+            <th style="width:30%"> 用户</th>
+            <th style="width:50%">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ user }}</td>
+            <td>
+                <button class="btn blue" data-toggle="modal" data-target="#modifypassword">修改密码</button>
+                <a class="btn red" href="/kerberos/user/del/?un={{ user }}">删除</a>
+                <button class="btn green" data-toggle="modal" data-target="#userinformation" onclick="userinfo('{{ user }}')">详细信息</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}	
+
+{% endblock %}
+{% block scripts %}
+<script src="{% static "plugins/bootstrap-datatable/jquery.dataTables.min.js" %}"></script>
+<script src="{% static "plugins/bootstrap-datatable/dataTables.bootstrap.js" %}"></script>
+<script>
+    $('th').addClass('text-center');
+    $('td').addClass('text-center');
+
+    var initTable = function () {
+        var table = $('#user_table');
+
+        var oTable = table.dataTable({
+
+            // Internationalisation. For more info refer to http://datatables.net/manual/i18n
+            "language": {
+                "aria": {
+                    "sortAscending": ": activate to sort column ascending",
+                    "sortDescending": ": activate to sort column descending"
+                },
+                "emptyTable": "没有可用数据",
+                "info": "_START_ 到 _END_，共 _TOTAL_ 条数据",
+                "infoEmpty": "没有可用数据",
+                "infoFiltered": "(filtered1 from _MAX_ total entries)",
+                "lengthMenu":'',
+                "search": "搜索:",
+                "zeroRecords": "没有匹配数据"
+            },
+
+            // Or you can use remote translation file
+            //"language": {
+            //   url: '//cdn.datatables.net/plug-ins/3cfcc339e89/i18n/Portuguese.json'
+            //},
+
+            "order": [
+                [0, 'asc']
+            ],
+          
+            // set the initial value
+            "pageLength": 10,
+
+            "dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", // horizobtal scrollable datatable
+
+            // Uncomment below line("dom" parameter) to fix the dropdown overflow issue in the datatable cells. The default datatable layout
+            // setup uses scrollable div(table-scrollable) with overflow:auto to enable vertical scroll(see: assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js). 
+            // So when dropdowns used the scrollable div should be removed. 
+            //"dom": "<'row' <'col-md-12'T>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>",
+        
+        });
+    };
+
+    initTable();
+</script>
+<script>
+    $("#admin_login").click(function(){
+        un=$('#username').val();
+		psd=$('#psd').val();
+		$.ajax({
+			type:'POST',
+			url:'/kerberos/user/admin_login/',
+			data:{
+				un:un,
+				psd:psd
+			},
+			dataType:'JSON',
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+                if(ret.status){
+                    alert("管理员"+ret.un+"登录成功");
+                    location.reload();
+                }
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+    });
+
+    function userinfo(un){
+        $.ajax({
+			type:'GET',
+			url:'/kerberos/user/user_info/?un='+un,
+			dataType:'JSON',
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+                if(ret.status){
+                    $("#user_info_display").val(ret.princ);
+                }else{
+                    $("#user_info_display").val("获取信息失败");
+                }
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+    }
+</script>
+{% endblock %}
