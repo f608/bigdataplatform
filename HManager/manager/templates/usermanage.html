@@ -98,7 +98,9 @@
                     <h4 class="modal-title" id="myModalLabel">查询用户信息</h4>
                 </div>
                 <div class="modal-body">
-                    <textarea id="user_info_display" cols="100" rows="7" style="font-size:13pt" readonly="readonly"></textarea>	
+                    <form action="">
+                        返回用户信息
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -125,15 +127,9 @@
             <td>1</td>
             <td>Alice</td>
             <td>
-<<<<<<< HEAD
                 <button class="btn blue" data-toggle="modal" data-target="#modifypassword">修改</button>
                 <button class="btn red" data-toggle="modal" data-target="#deleteuser">删除</button>
                 <button class="btn green" data-toggle="modal" data-target="#userinformation">详细信息</button>
-=======
-                <button class="btn blue" data-toggle="modal" data-target="#modifypassword">修改密码</button>
-                <a class="btn red" href="/kerberos/user/del/?un={{ user }}">删除</a>
-                <button class="btn green" data-toggle="modal" data-target="#userinformation" onclick="userinfo('{{ user }}')">详细信息</button>
->>>>>>> 4dcfd12fa45659348ce18196f2867b6cec073187
             </td>
         </tr>
         <tr>
@@ -236,26 +232,5 @@
 			}
 		})
     });
-
-    function userinfo(un){
-        $.ajax({
-			type:'GET',
-			url:'/kerberos/user/user_info/?un='+un,
-			dataType:'JSON',
-			beforeSend:function(){
-				$("#loadgif").show();
-			},
-			success:function(ret){
-                if(ret.status){
-                    $("#user_info_display").val(ret.princ);
-                }else{
-                    $("#user_info_display").val("获取信息失败");
-                }
-			},
-			complete:function(){
-				$("#loadgif").hide();
-			}
-		})
-    }
 </script>
 {% endblock %}
