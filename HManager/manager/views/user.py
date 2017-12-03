@@ -111,3 +111,4 @@ def create_user(request):
             ret['status']=1
     except Exception:
         ret['err']='用户创建失败'
+    return HttpResponse(json.dumps(ret))
