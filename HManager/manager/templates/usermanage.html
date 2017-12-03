@@ -224,6 +224,7 @@
 			success:function(ret){
                 if(ret.status){
                     alert("管理员"+ret.un+"登录成功");
+                    location.reload();
                 }
 			},
 			complete:function(){
