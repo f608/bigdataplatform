@@ -19,8 +19,8 @@
 			</div>
 			<div class="modal-body">
 				<form action="">
-					用户名：<input id="username" type="text" name="user" placeholder="请输入用户名"><br><br>             
-					密码：  <input id="psd" type="password" name="password" placeholder="请输入密码">
+					用户名：<input class="form-control" id="username" type="text" name="user" placeholder="请输入用户名"><br><br>             
+					密码：  <input class="form-control" id="psd" type="password" name="password" placeholder="请输入密码">
 				</form>
 			</div>
 			<div class="modal-footer">
@@ -47,7 +47,7 @@
 	<button onclick="kdc_operation('stop')" type="submit" class="btn btn-primary btn-sm" >停止</button>     
 	<button onclick="kdc_operation('status')" type="submit" class="btn btn-primary btn-sm" >查询当前状态</button>
 	</p>	
-	<textarea id="kdc_status_display" cols="100" rows="7" style="font-size:13pt" readonly="readonly">
+	<textarea class="form-control" id="kdc_status_display" rows="10" style="font-size:13pt" readonly="readonly">
     </textarea>
 	<br/>
 	<br/>
@@ -58,7 +58,7 @@
 	<button onclick="client_operation('stop')" type="submit" class="btn btn-primary btn-sm" >停止</button>	
 	<button onclick="client_operation('status')" type="submit" class="btn btn-primary btn-sm" >查询当前状态</button>
 	</p>
-	<textarea id="client_status_display" cols="100" rows="7" style="font-size:13pt" readonly="readonly">
+	<textarea class="form-control" id="client_status_display" rows="10" style="font-size:13pt" readonly="readonly">
     </textarea>	
     <br>
     <div style = "text-align:right">
