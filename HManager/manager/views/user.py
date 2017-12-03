@@ -78,3 +78,20 @@ def kadmin_logout(request):
     if request.session['admin']:
         del request.session['admin']
     return redirect('/kerberos/usermanage/')
+
+def get_user_info(request):
+    if request.session.get('admin'):
+        kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
+        un=request.GET.get('un')
+        princ=kadm.getprinc(un)
+        ret={'status':1,'princ':princ}
+    else:
+        ret={'status':0}
+    return HttpResponse(json.dumps(ret))
+
+def del_user(request):
+    if request.session.get('admin'):
+        kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
+        un=request.GET.get('un')
+        #暂未实现
+    return redirect('/kerberos/usermanage/')
