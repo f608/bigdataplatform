@@ -109,6 +109,6 @@ def create_user(request):
             psd=request.POST.get('psd')
             kadm.ank(un,psd)
             ret['status']=1
-    except Exception:
-        ret['err']='用户创建失败'
+    except Exception as e:
+        ret['err']='用户创建失败'+str(e)
     return HttpResponse(json.dumps(ret))
