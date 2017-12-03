@@ -32,7 +32,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal -->
-
+    {% if request.session.admin %}
     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
         新建用户
     </button>
@@ -151,7 +151,8 @@
             </td>
         </tr>
     </tbody>
-</table>		
+</table>
+{% endif %}	
 
 {% endblock %}
 {% block scripts %}

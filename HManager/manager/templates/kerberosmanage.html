@@ -101,7 +101,7 @@
 			},
 			success:function(ret){
 				if(ret.op=='status'){
-					$("kdc_status_display").val(ret.output)
+					$("#kdc_status_display").val(ret.output)
 				}
 				else{
 					if(ret.status){
@@ -128,7 +128,7 @@
 			},
 			success:function(ret){
 				if(ret.op=='status'){
-					$("client_status_display").val(ret.output)
+					$("#client_status_display").val(ret.output)
 				}
 				else{
 					if(ret.status){
