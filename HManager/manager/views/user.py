@@ -81,7 +81,6 @@ def kadmin_logout(request):
 
 def get_user_info(request):
     if request.session.get('admin'):
-        print(request.session['admin']['un'],request.session['admin']['psd'])
         kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
         un=request.GET.get('un')
         princ=kadm.getprinc(un)
