@@ -9,6 +9,9 @@ import pickle
 def usermanage(request):
     '''用户管理界面'''
     if request.method=='GET':
+        if request.session['admin']:
+            kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
+            users=kadm.principals()
         return render(request,'usermanage.html',locals())
 
 def kerberosmanage(request):

@@ -124,33 +124,17 @@
         </tr>
     </thead>
     <tbody>
+        {% for user in users %}
         <tr>
-            <td>1</td>
-            <td>Alice</td>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ user }}</td>
             <td>
                 <button class="btn blue" data-toggle="modal" data-target="#modifypassword">修改</button>
-                <button class="btn red" data-toggle="modal" data-target="#deleteuser">删除</button>
+                <button class="btn red">删除</button>
                 <button class="btn green" data-toggle="modal" data-target="#userinformation">详细信息</button>
             </td>
         </tr>
-        <tr>
-            <td>2</td>
-            <td>Bob</td>
-            <td>
-                <button class="btn blue">修改</button>
-                <button class="btn red">删除</button>
-                <button class="btn green">详细信息</button>
-            </td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Eve</td>
-            <td>
-                <button class="btn blue">修改</button>
-                <button class="btn red">删除</button>
-                <button class="btn green">详细信息</button>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 {% endif %}	
