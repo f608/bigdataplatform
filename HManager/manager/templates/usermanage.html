@@ -224,6 +224,7 @@
 			},
 			success:function(ret){
                 if(ret.status){
+                    alert('哈哈');
                     $("#user_info_display").val(ret.princ);
                 }else{
                     $("#user_info_display").val("获取信息失败");
