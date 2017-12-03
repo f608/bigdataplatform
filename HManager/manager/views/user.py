@@ -112,3 +112,18 @@ def create_user(request):
     except Exception as e:
         ret['err']='用户创建失败'+str(e)
     return HttpResponse(json.dumps(ret))
+
+def changepsd(request):
+     ret={'status':0}
+    try:
+        if request.session.get('admin'):
+            kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
+            un=request.GET.get('un')
+            psd=request.GET.get('psd')
+            princ=kadm.getprinc(un)
+            princ.change_password(psd)
+            ret['status']=1
+    except Exception as e:
+        print(e)
+        ret['err']='用户密码修改失败'
+    return HttpResponse(json.dumps(ret))
