@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table class="table table-striped">  
+    <thead>
+        <tr>
+            <th></th> 
+            <th></th>  
+            <th></th>         
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HDFS</td>
+            <td>
+                <button onclick="hdfs_operation('start')" class="btn btn-primary btn-sm" >启动</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button onclick="hdfs_operation('stop')" class="btn btn-primary btn-sm" >停止</button>                 
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>Yarn</td>
+            <td>
+                <button type="submit" onclick="yarn_operation('start')"  class="btn btn-primary btn-sm" >启动</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button type="submit" onclick="yarn_operation('stop')"  class="btn btn-primary btn-sm" >停止</button>                
+            </td> 
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>查看已经运行的java进程</td>
+            <td>
+                <button type="submit" class="btn btn-primary btn-sm" >查看</button>               
+            </td> 
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                    <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>查看目录</td>
+            <td>
+                <form name="input" action="html_form_action.php" method="get">
+                <input type="text" name="file" placeholder="请输入目录" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button type="submit" class="btn btn-primary btn-sm" >查看</button>
+                </form>
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>查看HDFS文件</td>
+            <td>
+                <form name="input" action="html_form_action.php" method="get">
+                <input type="text" name="file" placeholder="请输入文件路径" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button type="submit" class="btn btn-primary btn-sm" >查看</button>
+                </form>
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>下载HDFS文件</td>
+            <td>
+                <form name="input" action="html_form_action.php" method="get">
+                <input type="text" name="file" placeholder="请输入HDFS文件路径" style="width:300px"><br><br>
+                <input type="text" name="file" placeholder="请输入下载到本地文件路径" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button type="submit" class="btn btn-primary btn-sm" >下载</button>
+                </form>
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>上传HDFS文件</td>
+            <td>               
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="input-group input-large">
+                        <div class="form-control uneditable-input" data-trigger="fileinput">
+                            <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename">
+                            </span>
+                        </div>
+                        <span class="input-group-addon btn default btn-file">
+                            <span class="fileinput-new">Select file </span>
+                            <span class="fileinput-exists">Change </span>
+                            <input type="file" name="...">
+                        </span>
+                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">
+                         Remove </a>
+                    </div>
+                </div>
+
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>
+        </tr>
+        <tr>
+                <td>提交job至MapReduce</td>
+                <td>               
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="input-group input-large">
+                            <div class="form-control uneditable-input" data-trigger="fileinput">
+                                <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename">
+                                </span>
+                            </div>
+                            <span class="input-group-addon btn default btn-file">
+                                <span class="fileinput-new">Select file </span>
+                                <span class="fileinput-exists">Change </span>
+                                <input type="file" name="...">
+                            </span>
+                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">
+                             Remove </a>
+                        </div>
+                    </div>
+    
+                </td>
+                <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                    <span  class="icon-question fr"></span>
+                </td>
+            </tr>
+                <td>停止运行中的job</td>
+                <td>                             
+                    <form name="input" action="html_form_action.php" method="get">
+                    <input type="text" name="file" placeholder="请输入job ID"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                    <button type="submit" class="btn btn-primary btn-sm" >停止</button>
+                    </form>
+                </td>
+                <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                    <span  class="icon-question fr"></span>
+                </td>
+            </tr>
+    </tbody>
+</table>
+{% endblock %}
+{% block scripts %}
+<script type='text/javascript'>
+   function hdfs_operation(op){
+    $.ajax({
+			type:'GET',
+			url:'/hadoop/hdfs/?op='+op,
+			dataType:"JSON",
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+                if(ret.status){
+                    alert(ret.op+"失败: "+ret.output);
+                }else{
+                    alert(ret.op+"成功");
+                }
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+   };
+
+   function yarn_operation(op){
+       
+   }
+</script>
+
+
+{% endblock %}

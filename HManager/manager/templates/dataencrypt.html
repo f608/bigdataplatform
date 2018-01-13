@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<table class="table table-striped">  
+    <thead>
+        <tr>
+            <th></th> 
+            <th></th>  
+            <th></th>         
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>HDFS加密服务</td>
+            <td>
+                <button type="submit" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button type="submit" class="btn btn-primary btn-sm" >关闭</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>KMS加密服务</td>
+            <td>
+                <button type="submit" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button type="submit" class="btn btn-primary btn-sm" >关闭</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>              
+        <tr>
+            <td>创建加密密钥</td>
+            <td>
+                <form name="input" action="html_form_action.php" method="get">
+                    密钥名称: <input type="text" name="user" placeholder="请输入密钥名称"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                    密钥长度: <input type="text" name="user" placeholder="请输入密钥长度"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                    <button type="submit" class="btn btn-primary btn-sm">创建</button>
+                 </form>                        
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                    <span  class="icon-question fr"></span>
+            </td>           
+        </tr>     
+        <tr>
+            <td>创建加密空间</td>
+            <td>
+                <form name="input" action="html_form_action.php" method="get">
+                    密钥名称: <input type="text" name="user" placeholder="请输入密钥名称"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                    路径: <input type="text" name="user" placeholder="请输入路径"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                    <button type="submit" class="btn btn-primary btn-sm">创建</button>
+                 </form>                        
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                    <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>查看所有已存在密钥</td>
+            <td>
+                <button type="submit" class="btn btn-primary btn-sm" >查看</button>              
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>查看所有已存在的加密空间</td>
+            <td>
+                <button type="submit" class="btn btn-primary btn-sm" >查看</button>              
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>        
+
+
+    </tbody>
+</table>
+{% endblock %}
