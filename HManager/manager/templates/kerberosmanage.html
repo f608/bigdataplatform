@@ -127,7 +127,6 @@
 	</div><!-- /.modal -->
 </div>
 {% endblock %}
-
 {% block scripts %}
 <script type='text/javascript'>
 	$("#pwd_verify").click(function(){
@@ -198,7 +197,7 @@
 	function kerberos_verify(op){
 		$.ajax({
 			type:'GET',
-			url:'/kerberos/verify/?op'=op,
+			url:'/kerberos/verify/?op='+op,
 			dataType:"JSON",
 			beforeSend:function(){
 				$("#loadgif").show();
@@ -269,4 +268,6 @@
 		})
 	};
 </script>
+
+
 {% endblock %}

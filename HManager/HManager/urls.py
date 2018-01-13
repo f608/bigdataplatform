@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^kerberos/usermanage/$',user.usermanage),
     url(r'^kerberos/$',user.kerberosmanage),
     url(r'^hadoop/$',hadoop.hadoop_manage),
-    url(r'^dataencrypt/$',dataencrypt.data_encrypt)
+    url(r'^dataencrypt/$',dataencrypt.data_encrypt),
     #ajax路由
     #用户认证模块
     url(r'^kerberos/pwdverify/',user.pwd_verify),
