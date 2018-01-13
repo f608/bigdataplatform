@@ -5,6 +5,27 @@ import json
 import subprocess
 import kadmin
 import pickle
+from xml.etree.ElementTree import ElementTree,Element
+
+'''操作xml文件'''
+def read_xml(in_path):
+  tree = ElementTree()
+  tree.parse(in_path)
+  return tree
+
+def write_xml(tree,out_path):
+  tree.write(out_path)
+
+def find_nodes(tree,path):
+  return tree.findall(path)
+
+def change_element(tags,element,text_original,text_changed):
+  for tag in tags:
+    value = tag.find(element)
+    if value.text == text_original:
+      value.text = text_changed
+
+
 
 def usermanage(request):
     '''用户管理界面'''
@@ -20,11 +41,28 @@ def kerberosmanage(request):
         return render(request,'kerberosmanage.html',locals())
 
 @csrf_exempt
-def kerberos_verify(request):
-    '''ajax/用户认证'''
+def pwd_verify(request):
+    '''ajax/用户密码认证'''
     un=request.POST.get('un')
     psd=request.POST.get('psd')
     ret={'un':un,'psd':psd}
+    return HttpResponse(json.dumps(ret))
+
+def kerberos_verify(request):
+    '''ajax/kerberos操作'''
+    op=request.GET.get('op')
+    ret = {'status': 0, 'output':'', 'op':op}
+    tree= read_xml("/root/bigdata/hadoop-3.0.0/etc/hadoop/core-site.xml")
+    root = tree.getroot()
+    tags = find_nodes(root,"property")
+    if op=='start':
+        change_element(tags,"value","simple","kerberos")
+    elif op=='stop':
+        change_element(tags,"value","kerberos","simple")
+    else:
+        ret['status']=1
+        ret['output']='无效命令'
+    write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/core-site.xml")
     return HttpResponse(json.dumps(ret))
 
 def kdc_ops(request):
@@ -60,6 +98,17 @@ def client_ops(request):
         ret['status']=1
         ret['output']='无效命令'
     return HttpResponse(json.dumps(ret))
+
+def list_users(request):
+    '''ajax/列出认证用户'''
+    ret = {'status': 1, 'output':''}
+    ret['status'],ret['output']=subprocess.getstatusoutput('sudo klist')
+    reutrn HttpResponse(json.dumps(ret))
+
+def del_cache(request):
+    '''ajax/删除缓存'''
+    status, output=subprocess.getstatusoutput('sudo kdestroy')
+    return HttpResponse(json.dumps(status))
 
 @csrf_exempt
 def kadmin_login(request):

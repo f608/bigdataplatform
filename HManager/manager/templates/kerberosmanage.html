@@ -1,12 +1,76 @@
 {% extends 'base.html' %}
 {% block content %}
 
-   <!-- 按钮触发模态框 -->
-<button class="btn btn-primary" data-toggle="modal" data-target="#kinit">
-	用户认证
-</button>
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="kinit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<table class="table table-striped">  
+		<thead>
+			<tr>
+				<th></th> 
+				<th></th>  
+				<th></th>         
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>用户认证</td>
+				<td>
+					<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#passwordkinit">密码认证</button>
+					<span>&emsp;&emsp;</span>
+					<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#keytabkinit">keytab认证</button>
+					<span>&emsp;</span></td>
+				<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+					<span  class="icon-question fr"></span>
+				</td>           
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<button id="list_users" class="btn btn-primary btn-sm" >查看认证用户</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+					<button id="del_cache" class="btn btn-primary btn-sm" >删除认证缓存</button>               
+				</td>
+				<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+					<span  class="icon-question fr"></span>
+				</td>           
+			</tr>
+			<tr>
+				<td>Kerberos认证</td>
+				<td>
+					<button id="kbs_start" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+					<button id="kbs_stop" class="btn btn-primary btn-sm" >关闭</button>               
+				</td>
+				<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+					<span  class="icon-question fr"></span>
+				</td>           
+			</tr>
+			<tr>
+				<td>KDC</td>
+				<td>
+					<button onclick="kdc_operation('start')" class="btn btn-primary btn-sm" >启动</button>
+					<button onclick="kdc_operation('restart')" class="btn btn-primary btn-sm" >重启</button>
+					<button onclick="kdc_operation('stop')" class="btn btn-primary btn-sm" >停止</button>	
+					<button onclick="kdc_operation('status')" class="btn btn-primary btn-sm" >查询当前状态</button>           
+				</td>
+				<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+					<span  class="icon-question fr"></span>
+				</td>           
+			</tr>
+			<tr>
+				<td>客户端</td>
+				<td>
+					<button onclick="client_operation('start')"  class="btn btn-primary btn-sm" >启动</button>
+					<button onclick="client_operation('restart')" class="btn btn-primary btn-sm" >重启</button>
+					<button onclick="client_operation('stop')" class="btn btn-primary btn-sm" >停止</button>	
+					<button onclick="client_operation('status')" class="btn btn-primary btn-sm" >查询当前状态</button>            
+				</td>
+				<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+					<span  class="icon-question fr"></span>
+				</td>           
+			</tr>
+			
+		</tbody>
+	</table>
+
+<!-- 模态框（Modal） 用户认证 密码认证-->
+<div class="modal fade" id="passwordkinit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -19,61 +83,59 @@
 			</div>
 			<div class="modal-body">
 				<form action="">
-					用户名：<input class="form-control" id="username" type="text" name="user" placeholder="请输入用户名"><br><br>             
-					密码：  <input class="form-control" id="psd" type="password" name="password" placeholder="请输入密码">
+					用户名：<input type="text" id="user" placeholder="请输入用户名"><br><br>             
+					密码：  <input type="password" id="pwd" placeholder="请输入密码">
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">取消
 				</button>
-				<button id="user_verify" type="button" class="btn btn-primary">
+				<button id="pwd_verify" type="button" class="btn btn-primary">
 					认证
 				</button>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal -->
 </div>
-
-
-
-<br>
-<br>
-     
-
-    <div>
-	<p>KDC
-	<button onclick="kdc_operation('start')" type="submit" class="btn btn-primary btn-sm" >启动</button>
-	<button onclick="kdc_operation('restart')" type="submit" class="btn btn-primary btn-sm" >重启</button>
-	<button onclick="kdc_operation('stop')" type="submit" class="btn btn-primary btn-sm" >停止</button>     
-	<button onclick="kdc_operation('status')" type="submit" class="btn btn-primary btn-sm" >查询当前状态</button>
-	</p>	
-	<textarea class="form-control" id="kdc_status_display" rows="10" style="font-size:13pt" readonly="readonly">
-    </textarea>
-	<br/>
-	<br/>
 	
-	<p>客户端	
-	<button onclick="client_operation('start')" type="submit" class="btn btn-primary btn-sm" >启动</button>
-	<button onclick="client_operation('restart')" type="submit" class="btn btn-primary btn-sm" >重启</button>
-	<button onclick="client_operation('stop')" type="submit" class="btn btn-primary btn-sm" >停止</button>	
-	<button onclick="client_operation('status')" type="submit" class="btn btn-primary btn-sm" >查询当前状态</button>
-	</p>
-	<textarea class="form-control" id="client_status_display" rows="10" style="font-size:13pt" readonly="readonly">
-    </textarea>	
-    <br>
-    <div style = "text-align:right">
-      <button type="submit" class="btn btn-primary right">保存</button>
-      <button type="submit" class="btn btn-primary">应用</button>
-    </div>
+
+<!-- 模态框（Modal）用户认证 keytab认证 -->
+<div class="modal fade" id="keytabkinit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					用户认证
+				</h4>
+			</div>
+			<div class="modal-body">
+				<form action="">					   
+					keytab文件: <input type="file" id="keytab_ile">					
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消
+				</button>
+				<button id="keytab_verify" type="button" class="btn btn-primary">
+					认证
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
 {% endblock %}
+
 {% block scripts %}
 <script>
-	$("#user_verify").click(function(){
+	$("#pwd_verify").click(function(){
 		un=$('#username').val();
-		psd=$('#psd').val();
+		psd=$('#pwd').val();
 		$.ajax({
 			type:'POST',
-			url:'/kerberos/verify/',
+			url:'/kerberos/pwdverify/',
 			data:{
 				un:un,
 				psd:psd
@@ -89,7 +151,70 @@
 				$("#loadgif").hide();
 			}
 		})
-	})
+	});
+
+	$("#list_users").click(function(){
+		$.ajax({
+			type:'GET',
+			url:'/kerberos/listusers/',
+			dataType:'JSON',
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+				if(ret.status){
+					alert("操作失败: "+ret.output);
+				}else{
+					alert(ret.output);
+				}
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+	});
+
+	$("#del_cache").click(function(){
+		$.ajax({
+			type:'GET',
+			url:'/kerberos/delcache/',
+			dataType:'JSON',
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+				if(ret){
+					alert("操作失败");
+				}else{
+					alert("清除缓存成功");
+				}
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+	});
+
+	function kerberos_verify(op){
+		$.ajax({
+			type:'GET',
+			url:'/kerberos/verify/?op'=op,
+			dataType:"JSON",
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+				if(ret.status){
+					alert(ret.op+"失败: "+ret.output);
+				}else{
+					alert(ret.op+"成功");
+				}
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+	};
 
 	function kdc_operation(op){
 		$.ajax({
@@ -144,5 +269,5 @@
 		})
 	};
 
+
 </script>
-{% endblock %}
