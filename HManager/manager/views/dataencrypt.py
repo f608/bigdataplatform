@@ -53,7 +53,7 @@ def create_zone(request):
 
 def key_view(request):
     ret = {'status': 1, 'output':''}
-    ret['status'],ret['output']=subprocess.getstatusoutput('Hadoop key list -metadata')
+    ret['status'],ret['output']=subprocess.getstatusoutput('hadoop key list -metadata')
     return HttpResponse(json.dumps(ret))
 
 def zone_view(request):
