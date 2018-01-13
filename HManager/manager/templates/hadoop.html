@@ -142,27 +142,50 @@
 <script type='text/javascript'>
    function hdfs_operation(op){
     $.ajax({
-			type:'GET',
-			url:'/hadoop/hdfs/?op='+op,
-			dataType:"JSON",
-			beforeSend:function(){
-				$("#loadgif").show();
-			},
-			success:function(ret){
-                if(ret.status){
-                    alert(ret.op+"失败: "+ret.output);
-                }else{
-                    alert(ret.op+"成功");
-                }
-			},
-			complete:function(){
-				$("#loadgif").hide();
-			}
-		})
+        type:'GET',
+        url:'/hadoop/hdfs/?op='+op,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert(ret.op+"失败: "+ret.output);
+            }else{
+                alert(ret.op+"成功");
+            }
+        },
+        error:function(ret){
+            alert(ret.op+"失败: "+ret.output);
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
    };
 
    function yarn_operation(op){
-       
+    $.ajax({
+        type:'GET',
+        url:'/hadoop/yarn/?op='+op,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert(ret.op+"失败: "+ret.output);
+            }else{
+                alert(ret.op+"成功");
+            }
+        },
+        error:function(ret){
+            alert(ret.op+"失败: "+ret.output);
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
    }
 </script>
 

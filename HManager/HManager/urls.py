@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from manager.views import homepage,user,hadoop
+from manager.views import homepage,user,hadoop,dataencrypt
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^kerberos/usermanage/$',user.usermanage),
     url(r'^kerberos/$',user.kerberosmanage),
     url(r'^hadoop/$',hadoop.hadoop_manage),
+    url(r'^dataencrypt/$',dataencrypt.data_encrypt)
     #ajax路由
     #用户认证模块
     url(r'^kerberos/pwdverify/',user.pwd_verify),
@@ -42,5 +43,7 @@ urlpatterns = [
 
     #集群管理模块
     url(r'^hadoop/hdfs/',hadoop.hdfs_ops),
+    url(r'^hadoop/yarn/',hadoop.yarn_ops),
+
 
 ]

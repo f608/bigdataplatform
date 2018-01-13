@@ -16,3 +16,15 @@ def hdfs_ops(request):
         ret['status']=1
         ret['output']='无效命令'
     return HttpResponse(json.dumps(ret))
+
+def yarn_ops(request):
+    op=request.GET.get('op')
+    ret = {'status': 1, 'output':'', 'op':op}
+    if op=='start':
+        ret['status'],ret['output']=subprocess.getstatusoutput('start-yarn.sh')
+    elif op=='stop':
+        ret['status'],ret['output']=subprocess.getstatusoutput('stop-yarn.sh')
+    else:
+        ret['status']=1
+        ret['output']='无效命令'
+    return HttpResponse(json.dumps(ret))
