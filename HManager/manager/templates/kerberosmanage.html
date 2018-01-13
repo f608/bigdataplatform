@@ -130,21 +130,21 @@
 {% block scripts %}
 <script type='text/javascript'>
 	$("#pwd_verify").click(function(){
-		un=$('#username').val();
-		psd=$('#pwd').val();
+		un=$('#user').val();
+		pwd=$('#pwd').val();
 		$.ajax({
-			type:'POST',
-			url:'/kerberos/pwdverify/',
-			data:{
-				un:un,
-				psd:psd
-			},
+			type:'GET',
+			url:'/kerberos/pwdverify/?un'=un+'&pwd='+pwd,
 			dataType:'JSON',
 			beforeSend:function(){
 				$("#loadgif").show();
 			},
 			success:function(ret){
-				alert(ret.un+ret.psd)
+				if(ret.status){
+					alert("认证失败: "+ret.output);
+				}else{
+					alert("认证成功");
+				}
 			},
 			complete:function(){
 				$("#loadgif").hide();

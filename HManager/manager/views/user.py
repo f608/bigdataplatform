@@ -43,9 +43,12 @@ def kerberosmanage(request):
 @csrf_exempt
 def pwd_verify(request):
     '''ajax/用户密码认证'''
-    un=request.POST.get('un')
-    psd=request.POST.get('psd')
-    ret={'un':un,'psd':psd}
+    un=request.GET.get('un')
+    pwd=request.GET.get('pwd')
+    ret = {'status': 1, 'output':'请填写账户名密码'}
+    if un and pwd:
+        ret['status'],ret['output']=subprocess.getstatusoutput('hadoop job -kill %s'%id)
+    return HttpResponse(json.dumps(ret))
     return HttpResponse(json.dumps(ret))
 
 def kerberos_verify(request):
