@@ -33,11 +33,13 @@ def usermanage(request):
         if request.session.get('admin'):
             kadm=kadmin.init_with_password(request.session['admin']['un'],request.session['admin']['psd'])
             users=list(kadm.principals())
+            title='用户管理'
         return render(request,'usermanage.html',locals())
 
 def kerberosmanage(request):
     '''kerberos管理界面'''
     if request.method=='GET':
+        title='kerberos管理'
         return render(request,'kerberosmanage.html',locals())
 
 def pwd_verify(request):
@@ -157,7 +159,7 @@ def get_user_info(request):
 def del_user(request):
     un=request.GET.get('un')
     try:
-        subprocess.run('kadmin –q "delprinc %s"'%un)
+        subprocess.getoutput('kadmin –q "delprinc %s"'%un)
     except Exception as e:
         print(e)
     return redirect('/kerberos/usermanage/')

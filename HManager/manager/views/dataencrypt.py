@@ -6,6 +6,7 @@ import subprocess
 
 def data_encrypt(request):
     if request.method=='GET':
+        title='数据加密'
         return render(request,'dataencrypt.html',locals())
 
 '''

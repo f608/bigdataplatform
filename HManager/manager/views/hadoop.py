@@ -6,6 +6,7 @@ import subprocess
 
 def hadoop_manage(request):
     if request.method=='GET':
+        title='集群管理'
         return render(request,'hadoop.html',locals())
 
 def hdfs_ops(request):
