@@ -25,9 +25,9 @@ def kms_ops(request):
     op=request.GET.get('op')
     ret = {'status': 1, 'output':'', 'op':op}
     if op=='start':
-        ret['status'],ret['output']=subprocess.getstatusoutput('hadoop --deamon start kms')
+        ret['status'],ret['output']=subprocess.getstatusoutput('hadoop --daemon start kms')
     elif op=='stop':
-        ret['status'],ret['output']=subprocess.getstatusoutput('hadoop --deamon stop kms')
+        ret['status'],ret['output']=subprocess.getstatusoutput('hadoop --daemon stop kms')
     else:
         ret['status'],ret['output']=1,'无效命令'
     return HttpResponse(json.dumps(ret))
@@ -53,7 +53,7 @@ def create_zone(request):
 
 def key_view(request):
     ret = {'status': 1, 'output':''}
-    ret['status'],ret['output']=subprocess.getstatusoutput('hdfs key list -metadata')
+    ret['status'],ret['output']=subprocess.getstatusoutput('Hadoop key list -metadata')
     return HttpResponse(json.dumps(ret))
 
 def zone_view(request):
