@@ -103,7 +103,7 @@ def list_users(request):
     '''ajax/列出认证用户'''
     ret = {'status': 1, 'output':''}
     ret['status'],ret['output']=subprocess.getstatusoutput('sudo klist')
-    reutrn HttpResponse(json.dumps(ret))
+    return HttpResponse(json.dumps(ret))
 
 def del_cache(request):
     '''ajax/删除缓存'''
