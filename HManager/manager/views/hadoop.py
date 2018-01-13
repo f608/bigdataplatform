@@ -57,3 +57,10 @@ def file_download(request):
     if src and des:
         ret['status'],ret['output']=subprocess.getstatusoutput('hadoop fs –get %s %s'%(src, des))
     return HttpResponse(json.dumps(ret))
+
+def file_download(request):
+    id=request.GET.get('id')
+    ret = {'status': 1, 'output':'JobID错误'}
+    if id:
+        ret['status'],ret['output']=subprocess.getstatusoutput('hadoop job -kill %s'%id)
+    return HttpResponse(json.dumps(ret))

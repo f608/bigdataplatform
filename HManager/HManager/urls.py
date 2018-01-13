@@ -48,4 +48,5 @@ urlpatterns = [
     url(r'^hadoop/file_ls/',hadoop.file_ls),
     url(r'^hadoop/file_view/',hadoop.file_view),
     url(r'^hadoop/file_download/',hadoop.file_download),
+    url(r'^hadoop/stop_job/',hadoop.stop_job),
 ]

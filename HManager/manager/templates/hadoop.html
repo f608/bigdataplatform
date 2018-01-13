@@ -120,10 +120,8 @@
             </tr>
                 <td>停止运行中的job</td>
                 <td>                             
-                    <form name="input" action="html_form_action.php" method="get">
-                    <input type="text" name="file" placeholder="请输入job ID"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                    <button type="submit" class="btn btn-primary btn-sm" >停止</button>
-                    </form>
+                    <input type="text" id="stopid" placeholder="请输入job ID"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                    <button id="stop" class="btn btn-primary btn-sm" >停止</button>
                 </td>
                 <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                     <span  class="icon-question fr"></span>
@@ -177,13 +175,9 @@
    };
 
    function get_wrapper(url){
-
-   };
-
-   $("#jps").click(function(){
     $.ajax({
         type:'GET',
-        url:'/hadoop/jps/',
+        url:url,
         dataType:"JSON",
         beforeSend:function(){
             $("#loadgif").show();
@@ -192,81 +186,42 @@
             if(ret.status){
                 alert("操作失败: "+ret.output);
             }else{
-                alert(ret.output);
+                if(ret.output){
+                   alert(ret.output); 
+                }else{
+                    alert("操作成功");
+                }
             }
         },
         complete:function(){
             $("#loadgif").hide();
         }
     })
+   };
+
+   $("#jps").click(function(){
+       var url='/hadoop/jps/';
+        get_wrapper(url);
    });
 
    $("#file_ls").click(function(){
     var folder=$("#folder").val();
-    $.ajax({
-        type:'GET',
-        url:'/hadoop/file_ls/?folder='+folder,
-        dataType:"JSON",
-        beforeSend:function(){
-            $("#loadgif").show();
-        },
-        success:function(ret){
-            if(ret.status){
-                alert("操作失败: "+ret.output);
-            }else{
-                alert(ret.output);
-            }
-        },
-        complete:function(){
-            $("#loadgif").hide();
-        }
-    })
-   });
-
-   $("#file_view").click(function(){
-    var folder=$("#filename").val();
-    $.ajax({
-        type:'GET',
-        url:'/hadoop/file_view/?filename='+folder,
-        dataType:"JSON",
-        beforeSend:function(){
-            $("#loadgif").show();
-        },
-        success:function(ret){
-            if(ret.status){
-                alert("操作失败: "+ret.output);
-            }else{
-                alert(ret.output);
-            }
-        },
-        complete:function(){
-            $("#loadgif").hide();
-        }
-    })
+    var url='/hadoop/file_ls/?folder='+folder;
+    get_wrapper(url);
    });
 
    $("#download").click(function(){
        var src=$('#file_src').val();
        var des=$('#file_des').val();
-    $.ajax({
-        type:'GET',
-        url:'/hadoop/file_download/?src='+src+'&des='+des,
-        dataType:"JSON",
-        beforeSend:function(){
-            $("#loadgif").show();
-        },
-        success:function(ret){
-            if(ret.status){
-                alert("操作失败: "+ret.output);
-            }else{
-                alert(ret.output);
-            }
-        },
-        complete:function(){
-            $("#loadgif").hide();
-        }
-    })
+       var url='/hadoop/file_download/?src='+src+'&des='+des;
+       get_wrapper(url);
    });
+
+   $("#stop").click(function(){
+       var stopid=$('#stopid').val();
+       var url='/hadoop/stop_job/?id='+stopid;
+       get_wrapper(url);
+   })
 </script>
 
 
