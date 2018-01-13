@@ -23,8 +23,8 @@
         <tr>
             <td>Yarn</td>
             <td>
-                <button type="submit" onclick="yarn_operation('start')"  class="btn btn-primary btn-sm" >启动</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
-                <button type="submit" onclick="yarn_operation('stop')"  class="btn btn-primary btn-sm" >停止</button>                
+                <button onclick="yarn_operation('start')"  class="btn btn-primary btn-sm" >启动</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button onclick="yarn_operation('stop')"  class="btn btn-primary btn-sm" >停止</button>                
             </td> 
             <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -33,7 +33,7 @@
         <tr>
             <td>查看已经运行的java进程</td>
             <td>
-                <button type="submit" class="btn btn-primary btn-sm" >查看</button>               
+                <button id='jps' class="btn btn-primary btn-sm" >查看</button>               
             </td> 
             <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                     <span  class="icon-question fr"></span>
@@ -42,10 +42,8 @@
         <tr>
             <td>查看目录</td>
             <td>
-                <form name="input" action="html_form_action.php" method="get">
-                <input type="text" name="file" placeholder="请输入目录" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                <button type="submit" class="btn btn-primary btn-sm" >查看</button>
-                </form>
+                <input type="text" id='folder' placeholder="请输入目录" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button id='file_ls' class="btn btn-primary btn-sm" >查看</button>
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -54,10 +52,8 @@
         <tr>
             <td>查看HDFS文件</td>
             <td>
-                <form name="input" action="html_form_action.php" method="get">
-                <input type="text" name="file" placeholder="请输入文件路径" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                <button type="submit" class="btn btn-primary btn-sm" >查看</button>
-                </form>
+                <input type="text" id="filename" placeholder="请输入文件路径" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button id="file_view" class="btn btn-primary btn-sm" >查看</button>
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -66,11 +62,9 @@
         <tr>
             <td>下载HDFS文件</td>
             <td>
-                <form name="input" action="html_form_action.php" method="get">
-                <input type="text" name="file" placeholder="请输入HDFS文件路径" style="width:300px"><br><br>
-                <input type="text" name="file" placeholder="请输入下载到本地文件路径" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                <button type="submit" class="btn btn-primary btn-sm" >下载</button>
-                </form>
+                <input type="text" id="file_src" placeholder="请输入HDFS文件路径" style="width:300px"><br><br>
+                <input type="text" id="file_des" placeholder="请输入下载到本地文件路径" style="width:300px"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button id='download' class="btn btn-primary btn-sm" >下载</button>
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -155,9 +149,6 @@
                 alert(ret.op+"成功");
             }
         },
-        error:function(ret){
-            alert(ret.op+"失败: "+ret.output);
-        },
         complete:function(){
             $("#loadgif").hide();
         }
@@ -179,14 +170,103 @@
                 alert(ret.op+"成功");
             }
         },
-        error:function(ret){
-            alert(ret.op+"失败: "+ret.output);
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   };
+
+   function get_wrapper(url){
+
+   };
+
+   $("#jps").click(function(){
+    $.ajax({
+        type:'GET',
+        url:'/hadoop/jps/',
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert("操作失败: "+ret.output);
+            }else{
+                alert();
+            }
         },
         complete:function(){
             $("#loadgif").hide();
         }
     })
-   }
+   });
+
+   $("#file_ls").click(function(){
+    var folder=$("#folder").val();
+    $.ajax({
+        type:'GET',
+        url:'/hadoop/file_ls/?folder='+folder,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert("操作失败: "+ret.output);
+            }else{
+                alert();
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   });
+
+   $("#file_view").click(function(){
+    var folder=$("#filename").val();
+    $.ajax({
+        type:'GET',
+        url:'/hadoop/file_view/?filename='+folder,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert("操作失败: "+ret.output);
+            }else{
+                alert();
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   });
+
+   $("#download").click(function(){
+       var src=$('#file_src').val();
+       var des=$('#file_des').val();
+    $.ajax({
+        type:'GET',
+        url:'/hadoop/file_download/?src='+src+'&des='+des,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert("操作失败: "+ret.output);
+            }else{
+                alert();
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   });
 </script>
 
 

@@ -44,6 +44,8 @@ urlpatterns = [
     #集群管理模块
     url(r'^hadoop/hdfs/',hadoop.hdfs_ops),
     url(r'^hadoop/yarn/',hadoop.yarn_ops),
-
-
+    url(r'^hadoop/jps/',hadoop.jps),
+    url(r'^hadoop/file_ls/',hadoop.file_ls),
+    url(r'^hadoop/file_view/',hadoop.file_view),
+    url(r'^hadoop/file_download/',hadoop.file_download),
 ]
