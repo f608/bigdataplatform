@@ -39,7 +39,7 @@ def create_key(request):
     if key_name:
         cmd='hadoop key create %s'%key_name
         if key_len:
-            cmd+=' %s'%key_len
+            cmd+=' -size %s'%key_len
         ret['status'],ret['output']=subprocess.getstatusoutput(cmd)
     return HttpResponse(json.dumps(ret))
 
