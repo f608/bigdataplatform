@@ -159,7 +159,8 @@ def get_user_info(request):
 def del_user(request):
     un=request.GET.get('un')
     try:
-        subprocess.getoutput('kadmin –q "delprinc %s"'%un)
+        p=subprocess.Popen('kadmin.local –q "delprinc %s"'%un, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        p.communicate(input='yes')
     except Exception as e:
         print(e)
     return redirect('/kerberos/usermanage/')
