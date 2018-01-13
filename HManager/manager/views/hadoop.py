@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import Http404
+from django.views.decorators.csrf import csrf_exempt
+import json
+import subprocess
 
 def hadoop_manage(request):
     if request.method=='GET':
