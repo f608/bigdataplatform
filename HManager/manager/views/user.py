@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import Http404
 from django.views.decorators.csrf import csrf_exempt
 import json
-import subprocess
+import subprocess, shlex
 import kadmin
 import pickle
 from xml.etree.ElementTree import ElementTree,Element
@@ -159,7 +159,9 @@ def get_user_info(request):
 def del_user(request):
     un=request.GET.get('un')
     try:
-        p=subprocess.Popen(['kadmin.local','-q','"delprinc %s"'%un], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        cmd='kadmin.local -q "delprinc  %s"'%un
+        args=shlex.split(cmd)
+        p=subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         p.communicate(input='yes')
     except Exception as e:
         print(e)
