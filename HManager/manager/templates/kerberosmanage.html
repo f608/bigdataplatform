@@ -134,7 +134,7 @@
 		pwd=$('#pwd').val();
 		$.ajax({
 			type:'GET',
-			url:'/kerberos/pwdverify/?un'=un+'&pwd='+pwd,
+			url:'/kerberos/pwdverify/?un='+un+'&pwd='+pwd,
 			dataType:'JSON',
 			beforeSend:function(){
 				$("#loadgif").show();
