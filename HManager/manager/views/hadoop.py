@@ -33,7 +33,6 @@ def yarn_ops(request):
 def jps(request):
     ret = {'status': 1, 'output':''}
     ret['status'],ret['output']=subprocess.getstatusoutput('jps')
-    print(ret)
     return HttpResponse(json.dumps(ret))
 
 def file_ls(request):

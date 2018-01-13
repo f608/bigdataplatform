@@ -49,4 +49,12 @@ urlpatterns = [
     url(r'^hadoop/file_view/',hadoop.file_view),
     url(r'^hadoop/file_download/',hadoop.file_download),
     url(r'^hadoop/stop_job/',hadoop.stop_job),
+
+    #加密模块
+    #url(r'^dataencrypt/hdfs/',dataencrypt.hdfs_ops)
+    url(r'^dataencrypt/kms/',dataencrypt.kms_ops),
+    url(r'^dataencrypt/create_key/',dataencrypt.create_key),
+    url(r'^dataencrypt/create_zone/',dataencrypt.create_zone),
+    url(r'^dataencrypt/key_view/$',dataencrypt.key_view),
+    url(r'^dataencrypt/zone_view/$',dataencrypt.zone_view),
 ]
