@@ -49,7 +49,7 @@ def file_view(request):
         ret['status'],ret['output']=subprocess.getstatusoutput('hadoop fs -cat %s'%file_name)
     return HttpResponse(json.dumps(ret))
 
-def file_view(request):
+def file_download(request):
     src=request.GET.get('src')
     des=request.GET.get('des')
     ret = {'status': 1, 'output':'文件名或地址错误'}
