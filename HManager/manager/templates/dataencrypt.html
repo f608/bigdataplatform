@@ -13,8 +13,8 @@
         <tr>
             <td>HDFS加密服务</td>
             <td>
-                <button type="submit" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
-                <button type="submit" class="btn btn-primary btn-sm" >关闭</button>               
+                <button  class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button  class="btn btn-primary btn-sm" >关闭</button>               
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -23,8 +23,8 @@
         <tr>
             <td>KMS加密服务</td>
             <td>
-                <button type="submit" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
-                <button type="submit" class="btn btn-primary btn-sm" >关闭</button>               
+                <button onclick="kms_operation('start')" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button onclick="kms_operation('stop')" class="btn btn-primary btn-sm" >关闭</button>               
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -33,11 +33,9 @@
         <tr>
             <td>创建加密密钥</td>
             <td>
-                <form name="input" action="html_form_action.php" method="get">
-                    密钥名称: <input type="text" name="user" placeholder="请输入密钥名称"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                    密钥长度: <input type="text" name="user" placeholder="请输入密钥长度"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                    <button type="submit" class="btn btn-primary btn-sm">创建</button>
-                 </form>                        
+                密钥名称: <input type="text" id='key_name1' placeholder="请输入密钥名称"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                密钥长度: <input type="text" id='key_len' placeholder="请输入密钥长度"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button id='create_key' class="btn btn-primary btn-sm">创建</button>                      
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
                     <span  class="icon-question fr"></span>
@@ -46,11 +44,9 @@
         <tr>
             <td>创建加密空间</td>
             <td>
-                <form name="input" action="html_form_action.php" method="get">
-                    密钥名称: <input type="text" name="user" placeholder="请输入密钥名称"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                    路径: <input type="text" name="user" placeholder="请输入路径"><span>&ensp;&ensp;&ensp;&ensp;</span>
-                    <button type="submit" class="btn btn-primary btn-sm">创建</button>
-                 </form>                        
+                密钥名称: <input type="text" id='key_name2' placeholder="请输入密钥名称"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                路径: <input type="text" id='key_path' placeholder="请输入路径"><span>&ensp;&ensp;&ensp;&ensp;</span>
+                <button id='create_zone' class="btn btn-primary btn-sm">创建</button>
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
                     <span  class="icon-question fr"></span>
@@ -59,7 +55,7 @@
         <tr>
             <td>查看所有已存在密钥</td>
             <td>
-                <button type="submit" class="btn btn-primary btn-sm" >查看</button>              
+                <button id='key_view' class="btn btn-primary btn-sm" >查看</button>              
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -68,7 +64,7 @@
         <tr>
             <td>查看所有已存在的加密空间</td>
             <td>
-                <button type="submit" class="btn btn-primary btn-sm" >查看</button>              
+                <button id='zone_view' class="btn btn-primary btn-sm" >查看</button>              
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -78,4 +74,103 @@
 
     </tbody>
 </table>
+{% endblock %}
+
+{% block scripts %}
+<script type='text/javascript'>
+function hdfs_operation(op){
+    $.ajax({
+        type:'GET',
+        url:'/dataencrypt/hdfs/?op='+op,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert(ret.op+"失败: "+ret.output);
+            }else{
+                alert(ret.op+"成功");
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   };
+
+   function kms_operation(op){
+    $.ajax({
+        type:'GET',
+        url:'/dataencrypt/kms/?op='+op,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert(ret.op+"失败: "+ret.output);
+            }else{
+                alert(ret.op+"成功");
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   };
+
+   function get_wrapper(url){
+    $.ajax({
+        type:'GET',
+        url:url,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert("操作失败: "+ret.output);
+            }else{
+                if(ret.output){
+                   alert(ret.output); 
+                }else{
+                    alert("操作成功");
+                }
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   };
+
+   $('#create_key').click(function(){
+       var key_name=$('#key_name1').val();
+       var key_len=$('#key_len').val();
+       var url='/dataencrypt/create_key/?key_name='+key_name+'&key_len='+key_len;
+       get_wrapper(url);
+   });
+
+   $('#create_zone').click(function(){
+       var key_name=$('#key_name2').val();
+       var key_path=$('#key_path').val();
+       var url='/dataencrypt/create_zone/?key_name='+key_name+'&key_path='+key_path;
+       get_wrapper(url);
+   });
+
+   $('#key_view').click(function(){
+       var url='/dataencrypt/key_view/';
+       get_wrapper(url);
+   })
+
+   $('#zone_view').click(function(){
+       var url='/dataencrypt/zone_view/';
+       get_wrapper(url);
+   })
+
+   
+</script>
+
+
 {% endblock %}
