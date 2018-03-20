@@ -140,7 +140,7 @@ def get_keytabfile(request):
     keytabfile=request.GET.get('keytabfile')
     ret = {'status': 1, 'output':'文件路径错误'}
     if keytabfile:
-        ret['status'],ret['output']=subprocess.getstatusoutput('klist -e -k –t %s"'%keytabfile)
+        ret['status'],ret['output']=subprocess.getstatusoutput('klist -e -k -t %s"'%keytabfile)
     return HttpResponse(json.dumps(ret))
 
 @check_login
