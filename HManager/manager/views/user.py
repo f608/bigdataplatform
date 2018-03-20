@@ -155,7 +155,7 @@ def kadmin_login(request):
 def kadmin_logout(request):
     if request.session['admin']:
         del request.session['admin']
-    return redirect('/kerberos/usermanage/')
+    return redirect('/kerberos/login/')
 
 @check_login
 def get_user_info(request):

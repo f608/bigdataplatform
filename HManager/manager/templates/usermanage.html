@@ -5,33 +5,6 @@
 {% endblock %}
 {% block content %}
 <div><!-- 所有按钮 -->
-    <button class="btn btn-primary" data-toggle="modal" data-target="#adminlogin">
-            管理员登录
-        </button>
-        <!-- 模态框（Modal） -->
-        <div class="modal fade" id="adminlogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            &times;
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">管理员登录</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form action="">
-                            用户名：<input class="form-control" id="username" type="text" name="user" placeholder="请输入用户名"><br><br>             
-                            用户密码：<input class="form-control" id="psd" type="password" name="password" placeholder="请输入密码"><br><br>
-      
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button id="admin_login" type="button" class="btn btn-primary">登录</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal --> 
     {% if request.session.admin %}
     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
         新建用户
