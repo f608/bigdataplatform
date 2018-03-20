@@ -6,6 +6,16 @@ import subprocess, shlex
 import kadmin
 import pickle
 from xml.etree.ElementTree import ElementTree,Element
+import functools
+
+def check_login(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        request=args[0]
+        if not request.session.get('admin'):
+            return render(request, 'login.html')
+        return func(*args, **kwargs)
+    return wrapper
 
 '''操作xml文件'''
 def read_xml(in_path):
@@ -33,6 +43,7 @@ def login(request):
             return render(request, 'login.html')
         return redirect('/kerberos/usermange/')
 
+@check_login
 def usermanage(request):
     '''用户管理界面'''
     if request.method=='GET':
@@ -42,12 +53,14 @@ def usermanage(request):
             title='用户管理'
         return render(request,'usermanage.html',locals())
 
+@check_login
 def kerberosmanage(request):
     '''kerberos管理界面'''
     if request.method=='GET':
         title='kerberos管理'
         return render(request,'kerberosmanage.html',locals())
 
+@check_login
 def pwd_verify(request):
     '''ajax/用户密码认证'''
     un=request.GET.get('un')
@@ -58,6 +71,7 @@ def pwd_verify(request):
     return HttpResponse(json.dumps(ret))
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def kerberos_verify(request):
     '''ajax/kerberos操作'''
     op=request.GET.get('op')
@@ -75,6 +89,7 @@ def kerberos_verify(request):
     write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/core-site.xml")
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def kdc_ops(request):
     '''ajax/kdc操作'''
     op=request.GET.get('op')
@@ -92,6 +107,7 @@ def kdc_ops(request):
         ret['output']='无效命令'
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def client_ops(request):
     '''ajax/客户端操作'''
     op=request.GET.get('op')
@@ -109,17 +125,20 @@ def client_ops(request):
         ret['output']='无效命令'
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def list_users(request):
     '''ajax/列出认证用户'''
     ret = {'status': 1, 'output':''}
     ret['status'],ret['output']=subprocess.getstatusoutput('sudo klist')
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def del_cache(request):
     '''ajax/删除缓存'''
     status, output=subprocess.getstatusoutput('sudo kdestroy')
     return HttpResponse(json.dumps(status))
 
+@check_login
 @csrf_exempt
 def kadmin_login(request):
     '''ajax/用户页面管理员登录'''
@@ -133,11 +152,13 @@ def kadmin_login(request):
         ret = {'status': 0,'err':'密码错误'}
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def kadmin_logout(request):
     if request.session['admin']:
         del request.session['admin']
     return redirect('/kerberos/usermanage/')
 
+@check_login
 def get_user_info(request):
     ret={'status':0}
     try:
@@ -162,6 +183,7 @@ def get_user_info(request):
         ret['err']='用户信息读取失败'
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def del_user(request):
     un=request.GET.get('un')
     try:
@@ -173,6 +195,7 @@ def del_user(request):
         print(e)
     return redirect('/kerberos/usermanage/')
 
+@check_login
 @csrf_exempt
 def create_user(request):
     ret={'status':0}
@@ -187,6 +210,7 @@ def create_user(request):
         ret['err']='用户创建失败'+str(e)
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def changepsd(request):
     ret={'status':0}
     try:
