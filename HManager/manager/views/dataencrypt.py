@@ -112,7 +112,7 @@ def change_algorithm(request):
     write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/hdfs-site.xml")
     return HttpResponse(json.dumps(ret))
 
-def cahnge_bitlength(request):
+def change_bitlength(request):
     bitlength=request.GET.get('bitlength')
     ret = {'status': 0, 'output':''}
     tree= read_xml("/root/bigdata/hadoop-3.0.0/etc/hadoop/hdfs-site.xml")
