@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^$',homepage.home),
     url(r'^kerberos/usermanage/$',user.usermanage),
     url(r'^kerberos/$',user.kerberosmanage),
-    url(r'kerberos/login/$',)
+    url(r'kerberos/login/$',user.login),
     url(r'^hadoop/$',hadoop.hadoop_manage),
     url(r'^dataencrypt/$',dataencrypt.data_encrypt),
     #ajax路由
