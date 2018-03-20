@@ -26,6 +26,12 @@ def change_element(tags,element,text_original,text_changed):
       value.text = text_changed
 
 
+def login(request):
+    '''管理员登录界面'''
+    if request.method='GET':
+        if not request.session.get('admin'):
+            return render(request, 'login.html')
+        return redirect('/kerberos/usermange/')
 
 def usermanage(request):
     '''用户管理界面'''

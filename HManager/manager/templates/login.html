@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+{% endblock %}
+<div class="container">
+    <div class="col-md-4 col-md-offset-4">
+        <form role="form">
+            <div class="form-group">
+              <label for="name">管理员名</label>
+              <input type="text" class="form-control" id="username" placeholder="管理员名">
+            </div>
+            <div class="form-group">
+                <label for="name">密码</label>
+                <input type="text" class="form-control" id="psd" placeholder="密码">
+            </div>
+            <button id="admin_login" type="button" class="btn btn-primary">登录</button>
+          </form>
+    </div>
+</div>
+{% block scripts %}
+<script>
+    $("#admin_login").click(function(){
+        un=$('#username').val();
+		psd=$('#psd').val();
+		$.ajax({
+			type:'POST',
+			url:'/kerberos/user/admin_login/',
+			data:{
+				un:un,
+				psd:psd
+			},
+			dataType:'JSON',
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+                if(ret.status){
+                    window.location.href="/kerberos/usermanage/";
+                }else{
+                    alert(ret.err);
+                }
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+    });
+</script>
+{% endblock %}

@@ -31,7 +31,7 @@
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+        </div><!-- /.modal --> 
     {% if request.session.admin %}
     <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
         新建用户
@@ -187,7 +187,7 @@
     initTable();
 </script>
 <script>
-    $("#admin_login").click(function(){
+    /*$("#admin_login").click(function(){
         un=$('#username').val();
 		psd=$('#psd').val();
 		$.ajax({
@@ -213,7 +213,7 @@
 				$("#loadgif").hide();
 			}
 		})
-    });
+    });*/
 
     $("#create_user").click(function(){
         un=$('#nuername').val();

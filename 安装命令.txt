@@ -1,0 +1,8 @@
+1. yum install epel-release
+2. yum install python34
+3. wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py
+4. python3 get-pip.py
+5. pip3 install django
+6. 安装kadmin包
+7. cd到网站目录下
+8. python3 manage.py runserver 0.0.0.0:8000
