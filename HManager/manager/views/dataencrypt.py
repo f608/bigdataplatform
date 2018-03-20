@@ -5,6 +5,7 @@ import json
 import subprocess
 from manager.views.common import *
 
+@check_login
 def data_encrypt(request):
     if request.method=='GET':
         title='数据加密'
@@ -23,6 +24,7 @@ def hdfs_ops(request):
     return HttpResponse(json.dumps(ret))
 '''
 
+@check_login
 def kms_ops(request):
     op=request.GET.get('op')
     ret = {'status': 1, 'output':'', 'op':op}
@@ -34,6 +36,7 @@ def kms_ops(request):
         ret['status'],ret['output']=1,'无效命令'
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def create_key(request):
     key_name=request.GET.get('key_name')
     key_len=request.GET.get('key_len')
@@ -45,6 +48,7 @@ def create_key(request):
         ret['status'],ret['output']=subprocess.getstatusoutput(cmd)
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def create_zone(request):
     key_name=request.GET.get('key_name')
     key_path=request.GET.get('key_path')
@@ -53,16 +57,19 @@ def create_zone(request):
         ret['status'],ret['output']=subprocess.getstatusoutput('hdfs crypto -createZone -keyName %s -path %s'%(key_name, key_path))
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def key_view(request):
     ret = {'status': 1, 'output':''}
     ret['status'],ret['output']=subprocess.getstatusoutput('hadoop key list -metadata')
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def zone_view(request):
     ret = {'status': 1, 'output':''}
     ret['status'],ret['output']=subprocess.getstatusoutput('hdfs crypto -listZones')
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def datablock_ops(request):
     op=request.GET.get('op')
     ret = {'status': 0, 'output':'', 'op':op}
@@ -78,6 +85,7 @@ def datablock_ops(request):
     write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/hdfs-site.xml")
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def rpc_ops(request):
     op=request.GET.get('op')
     ret = {'status': 0, 'output':'', 'op':op}
@@ -93,6 +101,7 @@ def rpc_ops(request):
     write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/core-site.xml")
     return HttpResponse(json.dumps(ret))
 
+@check_login
 def change_algorithm(request):
     algorithm=request.GET.get('algorithm')
     ret = {'status': 0, 'output':''}
@@ -111,7 +120,8 @@ def change_algorithm(request):
         ret['status'],ret['output']=1,'无效命令'
     write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/hdfs-site.xml")
     return HttpResponse(json.dumps(ret))
-
+    
+@check_login
 def change_bitlength(request):
     bitlength=request.GET.get('bitlength')
     ret = {'status': 0, 'output':''}
@@ -122,7 +132,7 @@ def change_bitlength(request):
     # aes key bit length can be configured to 128, 192 or 256
     for v in ['128','192','256']:
         try:
-            change_element(tags,"value","128",bitlength)
+            change_element(tags,"value",v,bitlength)
             ret['status'],ret['output']=0,''
         except Exception as e:
             ret['status'],ret['output']=1,str(e)

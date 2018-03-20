@@ -3,7 +3,9 @@ from django.http import Http404
 from django.views.decorators.csrf import csrf_exempt
 import json
 import subprocess, shlex
+from manager.views.common import *
 
+@check_login
 def home(request):
     if request.method=='GET':
         return render(request,'home.html',locals())
@@ -24,6 +26,7 @@ def op_handler(service, op):
         ret['output']='无效命令'
     return ret
 
+@check_login
 def handle_service(request):
     service=request.GET.get('service')
     op=request.GET.get('op')

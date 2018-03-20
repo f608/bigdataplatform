@@ -52,6 +52,8 @@ urlpatterns = [
     url(r'^hadoop/file_view/',hadoop.file_view),
     url(r'^hadoop/file_download/',hadoop.file_download),
     url(r'^hadoop/stop_job/',hadoop.stop_job),
+    url(r'^hadoop/file_upload/',hadoop.file_upload),
+    url(r'^hadoop/submit_job/',hadoop.submit_job),
 
     #加密模块
     #url(r'^dataencrypt/hdfs/',dataencrypt.hdfs_ops)
@@ -64,7 +66,7 @@ urlpatterns = [
     url(r'^dataencrypt/rpc/', dataencrypt.rpc_ops),
     url(r'^dataencrypt/algorithm/', dataencrypt.change_algorithm),
     url(r'^dataencrypt/bitlength/', dataencrypt.change_bitlength),
-    
+
     #集群监控模块
     url(r'^monitor/service/',homepage.handle_service),
 ]

@@ -73,22 +73,9 @@
         <tr>
             <td>上传HDFS文件</td>
             <td>               
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="input-group input-large">
-                        <div class="form-control uneditable-input" data-trigger="fileinput">
-                            <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename">
-                            </span>
-                        </div>
-                        <span class="input-group-addon btn default btn-file">
-                            <span class="fileinput-new">Select file </span>
-                            <span class="fileinput-exists">Change </span>
-                            <input type="file" name="...">
-                        </span>
-                        <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">
-                         Remove </a>
-                    </div>
-                </div>
-
+                <input id="source" type="text" placeholder="源文件">
+                <input id="dest" type="text" placeholder="目标文件">
+                <button id='file_upload' class="btn btn-primary btn-sm" >确定</button>  
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -96,23 +83,11 @@
         </tr>
         <tr>
                 <td>提交job至MapReduce</td>
-                <td>               
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="input-group input-large">
-                            <div class="form-control uneditable-input" data-trigger="fileinput">
-                                <i class="fa fa-file fileinput-exists"></i>&nbsp; <span class="fileinput-filename">
-                                </span>
-                            </div>
-                            <span class="input-group-addon btn default btn-file">
-                                <span class="fileinput-new">Select file </span>
-                                <span class="fileinput-exists">Change </span>
-                                <input type="file" name="...">
-                            </span>
-                            <a href="javascript:;" class="input-group-addon btn red fileinput-exists" data-dismiss="fileinput">
-                             Remove </a>
-                        </div>
-                    </div>
-    
+                <td>
+                    <input id="jar" type="text" placeholder="jar文件路径">
+                    <input id="jobmainclass" type="text" placeholder="JobMainClass">
+                    <input id="jobargs" type="text" placeholder="JobArgs">
+                    <button id='submit_job' class="btn btn-primary btn-sm" >确定</button>  
                 </td>
                 <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
                     <span  class="icon-question fr"></span>
@@ -205,9 +180,15 @@
    });
 
    $("#file_ls").click(function(){
-    var folder=$("#folder").val();
-    var url='/hadoop/file_ls/?folder='+folder;
-    get_wrapper(url);
+        var folder=$("#folder").val();
+        var url='/hadoop/file_ls/?folder='+folder;
+        get_wrapper(url);
+   });
+
+   $("#file_view").click(function(){
+        var folder=$("#filename").val();
+        var url='/hadoop/file_view/?filename='+filename;
+        get_wrapper(url);
    });
 
    $("#download").click(function(){
@@ -220,6 +201,21 @@
    $("#stop").click(function(){
        var stopid=$('#stopid').val();
        var url='/hadoop/stop_job/?id='+stopid;
+       get_wrapper(url);
+   });
+
+   $("#file_upload").click(function(){
+        var source=$("#source").val();
+        var dest=$("#dest").val();
+        var url='/hadoop/file_upload/?src='+source+'&des='+dest;
+        get_wrapper(url);
+   });
+
+   $("#submit_job").click(function(){
+       var jar=$("#jar").val();
+       var jobmainclass=$("#jobMainClass").val();
+       var jobargs=$("#jobArgs").val();
+       var url='/hadoop/submit_job?jar='+jar+'&jobmainclass='+jobmainclass+'&jobargs='+jobargs;
        get_wrapper(url);
    })
 </script>
