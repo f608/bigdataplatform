@@ -189,7 +189,7 @@ def del_user(request):
         cmd='kadmin.local -q "delprinc  %s"'%un
         args=shlex.split(cmd)
         p=subprocess.Popen(args, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        p.communicate(input='yes'.encode())
+        p.communicate(input='yes\n'.encode())
     except Exception as e:
         print(e)
     return redirect('/kerberos/usermanage/')
