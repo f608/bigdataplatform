@@ -69,7 +69,6 @@ def pwd_verify(request):
     if un and pwd:
         ret['status'],ret['output']=subprocess.getstatusoutput('kinit %s/%s'%(un, pwd))
     return HttpResponse(json.dumps(ret))
-    return HttpResponse(json.dumps(ret))
 
 @check_login
 def kerberos_verify(request):
@@ -124,6 +123,17 @@ def client_ops(request):
         ret['status']=1
         ret['output']='无效命令'
     return HttpResponse(json.dumps(ret))
+
+@check_login
+def gen_keytab(request):
+    '''ajax/生成keytab'''
+    keytab=request.GET.get('keytab')
+    username=request.GET.get('username')
+    ret = {'status': 1, 'output':'路径或用户名错误'}
+    if keytab and username:
+        ret['status'],ret['output']=subprocess.getstatusoutput('kadmin .local –q "xst –norandkey –k %s %s"'%(keytab, username))
+    return HttpResponse(json.dumps(ret))
+
 
 @check_login
 def list_users(request):
