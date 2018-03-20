@@ -13,7 +13,7 @@ def check_login(func):
     def wrapper(*args, **kwargs):
         request=args[0]
         if not request.session.get('admin'):
-            return render(request, 'login.html')
+            return redirect('/kerberos/login/')
         return func(*args, **kwargs)
     return wrapper
 
@@ -138,7 +138,6 @@ def del_cache(request):
     status, output=subprocess.getstatusoutput('sudo kdestroy')
     return HttpResponse(json.dumps(status))
 
-@check_login
 @csrf_exempt
 def kadmin_login(request):
     '''ajax/用户页面管理员登录'''
