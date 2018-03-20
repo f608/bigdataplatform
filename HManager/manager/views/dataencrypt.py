@@ -81,7 +81,7 @@ def datablock_ops(request):
 def rpc_ops(request):
     op=request.GET.get('op')
     ret = {'status': 0, 'output':'', 'op':op}
-    tree= read_xml("/root/bigdata/core-site.xml")
+    tree= read_xml("/root/bigdata/hadoop-3.0.0/etc/hadoop/core-site.xml")
     root = tree.getroot()
     tags = find_nodes(root,"property")
     if op=='start':
@@ -90,7 +90,7 @@ def rpc_ops(request):
         change_element(tags,"value","privacy","authentication")
     else:
         ret['status'],ret['output']=1,'无效命令'
-    write_xml(tree,"/root/bigdata/core-site.xml")
+    write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/core-site.xml")
     return HttpResponse(json.dumps(ret))
 
 def change_algorithm(request):
@@ -120,10 +120,12 @@ def change_bitlength(request):
     tags = find_nodes(root,"property")
 
     # aes key bit length can be configured to 128, 192 or 256
-    try:
-        change_element(tags,"value","128",bitlength)
-    except Exception as e:
-        ret['status'],ret['output']=1,str(e)
+    for v in ['128','192','256']:
+        try:
+            change_element(tags,"value","128",bitlength)
+            ret['status'],ret['output']=0,''
+        except Exception as e:
+            ret['status'],ret['output']=1,str(e)
     write_xml(tree,"/root/bigdata/hadoop-3.0.0/etc/hadoop/hdfs-site.xml")
     return HttpResponse(json.dumps(ret))
 
