@@ -1,0 +1,6 @@
+systemctl start xxx.service
+systemctl stop xxx.service
+systemctl status xxx.service
+
+
+zabbix-server zabbix-agent gmetad gmond httpd
