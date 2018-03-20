@@ -5,7 +5,7 @@ import json
 import subprocess, shlex
 import kadmin
 import pickle
-from common import *
+from manager.views.common import *
 
 
 def login(request):
