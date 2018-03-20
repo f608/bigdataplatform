@@ -60,6 +60,10 @@ urlpatterns = [
     url(r'^dataencrypt/create_zone/',dataencrypt.create_zone),
     url(r'^dataencrypt/key_view/$',dataencrypt.key_view),
     url(r'^dataencrypt/zone_view/$',dataencrypt.zone_view),
+    url(r'^dataencrypt/data_block/', dataencrypt.datablock_ops),
+    url(r'^dataencrypt/rpc/', dataencrypt.rpc_ops),
+    url(r'^dataencrypt/algorithm/', dataencrypt.change_algorithm),
+    url(r'^dataencrypt/bitlength/', dataencrypt.change_bitlength),
 
     #集群监控模块
     url(r'^monitor/service/',homepage.handle_service),

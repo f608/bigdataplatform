@@ -5,35 +5,7 @@ import json
 import subprocess, shlex
 import kadmin
 import pickle
-from xml.etree.ElementTree import ElementTree,Element
-import functools
-
-def check_login(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        request=args[0]
-        if not request.session.get('admin'):
-            return redirect('/kerberos/login/')
-        return func(*args, **kwargs)
-    return wrapper
-
-'''操作xml文件'''
-def read_xml(in_path):
-  tree = ElementTree()
-  tree.parse(in_path)
-  return tree
-
-def write_xml(tree,out_path):
-  tree.write(out_path)
-
-def find_nodes(tree,path):
-  return tree.findall(path)
-
-def change_element(tags,element,text_original,text_changed):
-  for tag in tags:
-    value = tag.find(element)
-    if value.text == text_original:
-      value.text = text_changed
+from common import *
 
 
 def login(request):
@@ -140,7 +112,7 @@ def get_keytabfile(request):
     keytabfile=request.GET.get('keytabfile')
     ret = {'status': 1, 'output':'文件路径错误'}
     if keytabfile:
-        ret['status'],ret['output']=subprocess.getstatusoutput('klist -e -k -t %s"'%keytabfile)
+        ret['status'],ret['output']=subprocess.getstatusoutput('klist -e -k -t %s'%keytabfile)
     return HttpResponse(json.dumps(ret))
 
 @check_login

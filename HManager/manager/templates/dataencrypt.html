@@ -4,9 +4,7 @@
 <table class="table table-striped">  
     <thead>
         <tr>
-            <th></th> 
-            <th></th>  
-            <th></th>         
+            <th colspan="3">数据加密</th>      
         </tr>
     </thead>
     <tbody>
@@ -23,8 +21,8 @@
         <tr>
             <td>KMS加密服务</td>
             <td>
-                <button onclick="kms_operation('start')" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
-                <button onclick="kms_operation('stop')" class="btn btn-primary btn-sm" >关闭</button>               
+                <button onclick="operation('kms','start')" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button onclick="operation('kms','stop')" class="btn btn-primary btn-sm" >关闭</button>               
             </td>
             <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
                 <span  class="icon-question fr"></span>
@@ -70,15 +68,71 @@
                 <span  class="icon-question fr"></span>
             </td>           
         </tr>        
+    </tbody>
+</table>
 
-
+<table class="table table-striped">  
+    <thead>
+        <tr>
+            <th colspan="3">传输加密</th>      
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>数据块传输加密服务</td>
+            <td>
+                <button onclick="operation('data_block','start')"  class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button onclick="operation('data_block','stop')" class="btn btn-primary btn-sm" >关闭</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td> 
+        </tr>  
+        <tr>
+            <td>RPC传输加密服务</td>
+            <td>
+                <button onclick="operation('rpc','start')" class="btn btn-primary btn-sm" >开启</button><span>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;</span>
+                <button onclick="operation('rpc','stop')"  class="btn btn-primary btn-sm" >关闭</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td> 
+        </tr>
+        <tr>
+            <td>加密算法选择</td>
+            <td>
+                <select id="algorithm">
+                    <option>3DES</option>
+                    <option>RC4</option>
+                    <option>AES</option>
+                </select>
+                <button id="algorithm_confirm"  class="btn btn-primary btn-sm" >确定</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td> 
+        </tr> 
+        <tr>
+            <td>AES比特长度选择</td>
+            <td>
+                <select id="bitlength">
+                    <option>128</option>
+                    <option>192</option>
+                    <option>256</option>
+                </select>
+                <button id="bitlength_confirm"  class="btn btn-primary btn-sm" >确定</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="left" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td> 
+        </tr>     
     </tbody>
 </table>
 {% endblock %}
 
 {% block scripts %}
 <script type='text/javascript'>
-function hdfs_operation(op){
+/*function hdfs_operation(op){
     $.ajax({
         type:'GET',
         url:'/dataencrypt/hdfs/?op='+op,
@@ -97,12 +151,12 @@ function hdfs_operation(op){
             $("#loadgif").hide();
         }
     })
-   };
+   };*/
 
-   function kms_operation(op){
+   function operation(service,op){
     $.ajax({
         type:'GET',
-        url:'/dataencrypt/kms/?op='+op,
+        url:'/dataencrypt/'+service+'/?op='+op,
         dataType:"JSON",
         beforeSend:function(){
             $("#loadgif").show();
@@ -169,7 +223,50 @@ function hdfs_operation(op){
        get_wrapper(url);
    })
 
-   
+   $("#algorithm_confirm").click(function(){
+       var algorithm=$("#algorithm").val();
+        $.ajax({
+            type:'GET',
+            url:'/dataencrypt/algorithm/?algorithm='+algorithm,
+            dataType:"JSON",
+            beforeSend:function(){
+                $("#loadgif").show();
+            },
+            success:function(ret){
+                if(ret.status){
+                    alert("操作失败: "+ret.output);
+                }else{
+                    alert("加密算法修改成功");
+                }
+            },
+            complete:function(){
+                $("#loadgif").hide();
+            }
+        })
+   });
+
+   $("#bitlength_confirm").click(function(){
+       var bitlength=$("#bitleng").val();
+        $.ajax({
+            type:'GET',
+            url:'/dataencrypt/bitlength/?bitlength='+bitlength,
+            dataType:"JSON",
+            beforeSend:function(){
+                $("#loadgif").show();
+            },
+            success:function(ret){
+                if(ret.status){
+                    alert("操作失败: "+ret.output);
+                }else{
+                    alert("比特长度修改成功");
+                }
+            },
+            complete:function(){
+                $("#loadgif").hide();
+            }
+        })
+   });
+
 </script>
 
 
