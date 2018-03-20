@@ -1,4 +1,121 @@
 {% extends 'base.html' %}
 {% block content %}
+<table class="table table-striped">  
+    <tbody>
+        <tr>
+            <td colspan="3">
+                <a href="http://10.251.0.25/ganglia">ganglia监控页面</a>
+            </td>
+        </tr>
+        <tr>
+           <td>gmond服务</td>
+           <td>
+               <button onclick="handle_service('gmond','start')" class="btn btn-primary btn-sm" style="margin-right:10px">开启</button>
+               <button onclick="handle_service('gmond','stop')" class="btn btn-primary btn-sm">关闭</button>
+           </td>
+           <td>
+               <button onclick="handle_service('gmond','status')" class="btn btn-primary btn-sm">状态信息</button>
+           </td>
+           <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>gmetad服务</td>
+            <td>
+                <button onclick="handle_service('gmetad','start')" class="btn btn-primary btn-sm" style="margin-right:10px">开启</button>
+                <button onclick="handle_service('gmetad','stop')" class="btn btn-primary btn-sm">关闭</button>
+            </td>
+            <td>
+                <button onclick="handle_service('gmetad','status')" class="btn btn-primary btn-sm">状态信息</button>
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                 <span  class="icon-question fr"></span>
+             </td>
+         </tr>
+
+         <tr>
+            <td>httpd服务</td>
+            <td>
+                <button onclick="handle_service('httpd','start')" class="btn btn-primary btn-sm" style="margin-right:10px">开启</button>
+                <button onclick="handle_service('httpd','stop')" class="btn btn-primary btn-sm">关闭</button>
+            </td>
+            <td>
+                <button onclick="handle_service('httpd','status')" class="btn btn-primary btn-sm">状态信息</button>
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                 <span  class="icon-question fr"></span>
+             </td>
+         </tr>
+    </tbody>
+</table>
+
+<table class="table table-striped">  
+    <tbody>
+        <tr>
+            <td colspan="4">
+                <a href="http://10.251.0.25/zabbix">zabbix监控页面</a>
+            </td>
+        </tr>
+        <tr>
+            <td>zabbix-server服务</td>
+            <td>
+                <button onclick="handle_service('zabbix-server','start')" class="btn btn-primary btn-sm" style="margin-right:10px">开启</button>
+                <button onclick="handle_service('zabbix-server','stop')" class="btn btn-primary btn-sm">关闭</button>
+            </td>
+            <td>
+                <button onclick="handle_service('zabbix-server','status')" class="btn btn-primary btn-sm">状态信息</button>
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>
+        </tr>
+
+        <tr>
+            <td>zabbix-agent服务</td>
+            <td>
+                <button onclick="handle_service('zabbix-agent','start')" class="btn btn-primary btn-sm" style="margin-right:10px">开启</button>
+                <button onclick="handle_service('zabbix-agent','stop')" class="btn btn-primary btn-sm">关闭</button>
+            </td>
+            <td>
+                <button onclick="handle_service('zabbix-agent','status')" class="btn btn-primary btn-sm">状态信息</button>
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>
+        </tr>
+            
+    </tbody>
+</table>
+{% endblock %}
+{% block scripts %}
+<script>
+    function handle_service(service,op){
+        $.ajax({
+			type:'GET',
+			url:'/monitor/service/?service='+service+"&op="+op,
+			dataType:"JSON",
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+				if(ret.op=='status'){
+					alert(ret.output)
+				}
+				else{
+					if(ret.status){
+						alert(ret.op+"失败: "+ret.output);
+					}else{
+						alert(ret.op+"成功");
+					}
+				}
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+    }
+</script>
 
 {% endblock %}

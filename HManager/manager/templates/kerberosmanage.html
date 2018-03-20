@@ -66,17 +66,26 @@
 				</td>           
 			</tr>
 			<tr>
-					<td>生成keytab文件</td>
-					<td>
-						<input id="keytab" type="text" placeholder="keytab文件目录">
-						<input id="username" type="text" placeholder="用户名">
-						<button onclick="gen_keytab()" class="btn btn-primary btn-sm" >确定</button>            
-					</td>
-					<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
-						<span  class="icon-question fr"></span>
-					</td>           
-				</tr>
-			
+				<td>生成keytab文件</td>
+				<td>
+					<input id="keytab" type="text" placeholder="keytab文件目录">
+					<input id="username" type="text" placeholder="用户名">
+					<button onclick="gen_keytab()" class="btn btn-primary btn-sm" >确定</button>            
+				</td>
+				<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+					<span  class="icon-question fr"></span>
+				</td>           
+			</tr>
+			<tr>
+				<td>查看keytab文件</td>
+				<td>
+					<input id="keytabfile" type="text" placeholder="keytab文件路径">
+					<button onclick="get_keytabfile()" class="btn btn-primary btn-sm" >确定</button>            
+				</td>
+				<td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+					<span  class="icon-question fr"></span>
+				</td>           
+			</tr>
 		</tbody>
 	</table>
 
@@ -300,7 +309,29 @@
 				$("#loadgif").hide();
 			}
 		})
-	}
+	};
+
+	function get_keytab(){
+		var keytabfile=$("#keytabfile").val();
+		$.ajax({
+			type:'GET',
+			url:'/kerberos/gen_keytab/?keytabfile='+keytabfile,
+			dataType:"JSON",
+			beforeSend:function(){
+				$("#loadgif").show();
+			},
+			success:function(ret){
+				if(ret.status){
+					alert("操作失败: "+ret.output);
+				}else{
+					alert(ret.output);
+				}
+			},
+			complete:function(){
+				$("#loadgif").hide();
+			}
+		})
+	};
 </script>
 
 

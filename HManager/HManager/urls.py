@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from manager.views import homepage,user,hadoop,dataencrypt
+from manager.views import user,hadoop,dataencrypt,homepage
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -59,4 +59,7 @@ urlpatterns = [
     url(r'^dataencrypt/create_zone/',dataencrypt.create_zone),
     url(r'^dataencrypt/key_view/$',dataencrypt.key_view),
     url(r'^dataencrypt/zone_view/$',dataencrypt.zone_view),
+
+    #集群监控模块
+    url(r'^monitor/service/',homepage.handle_service),
 ]

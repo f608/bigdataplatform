@@ -131,9 +131,17 @@ def gen_keytab(request):
     username=request.GET.get('username')
     ret = {'status': 1, 'output':'路径或用户名错误'}
     if keytab and username:
-        ret['status'],ret['output']=subprocess.getstatusoutput('kadmin .local –q "xst –norandkey –k %s %s"'%(keytab, username))
+        ret['status'],ret['output']=subprocess.getstatusoutput('kadmin.local –q "xst –norandkey –k %s %s"'%(keytab, username))
     return HttpResponse(json.dumps(ret))
 
+@check_login
+def get_keytabfile(request):
+    '''ajax/查看keytab'''
+    keytabfile=request.GET.get('keytabfile')
+    ret = {'status': 1, 'output':'文件路径错误'}
+    if keytabfile:
+        ret['status'],ret['output']=subprocess.getstatusoutput('klist -e -k –t %s"'%keytabfile)
+    return HttpResponse(json.dumps(ret))
 
 @check_login
 def list_users(request):
