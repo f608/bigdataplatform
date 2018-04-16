@@ -315,7 +315,7 @@
 		var keytabfile=$("#keytabfile").val();
 		$.ajax({
 			type:'GET',
-			url:'/kerberos/gen_keytab/?keytabfile='+keytabfile,
+			url:'/kerberos/get_keytabfile/?keytabfile='+keytabfile,
 			dataType:"JSON",
 			beforeSend:function(){
 				$("#loadgif").show();
