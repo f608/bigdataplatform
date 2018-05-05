@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table table-striped">  
+    <thead>
+        <tr>
+            <th></th> 
+            <th></th>  
+            <th></th>         
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>启动sentry组件</td>
+            <td>
+                <button id="sentry_start" class="btn btn-primary btn-sm" >启动</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td colspan="3">
+                <a href="http://10.251.0.25:29000/">sentry页面</a>
+            </td>
+        </tr>
+        <tr>
+            <td>启动HUE组件</td>
+            <td>
+                <button id="HUE_start" class="btn btn-primary btn-sm" >启动</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td colspan="3">
+                <a href="http://10.251.0.25:8888">HUE页面</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+{% block scripts %}
+<script>
+    function get_wrapper(url){
+    $.ajax({
+        type:'GET',
+        url:url,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert("操作失败: "+ret.output);
+            }else{
+                if(ret.output){
+                   alert(ret.output); 
+                }else{
+                    alert("操作成功");
+                }
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   };
+
+   $("#sentry_start").click(function(){
+    var url='/accesscontrol/sentry/start';
+    get_wrapper(url);
+   });
+
+   $("#HUE_start").click(function(){
+    var url='/accesscontrol/hue/start';
+    get_wrapper(url);
+   });
+</script>
+{% endblock %}

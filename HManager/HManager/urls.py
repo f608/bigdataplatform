@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from manager.views import user,hadoop,dataencrypt,homepage
+from manager.views import user,hadoop,dataencrypt,homepage,logaudit,accesscontrol
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'kerberos/login/$',user.login),
     url(r'^hadoop/$',hadoop.hadoop_manage),
     url(r'^dataencrypt/$',dataencrypt.data_encrypt),
+    url(r'^logaudit/$',logaudit.logaudit_homepage),
+    url(r'^accesscontrol/$',accesscontrol.accesscontrol_homepage),
     #ajax路由
     #用户认证模块
     url(r'^kerberos/pwdverify/',user.pwd_verify),
@@ -69,4 +71,13 @@ urlpatterns = [
 
     #集群监控模块
     url(r'^monitor/service/',homepage.handle_service),
+
+    #日志审计模块
+    url(r'^logaudit/elasticsearch/start/$', logaudit.elasticsearch_start),
+    url(r'^logaudit/logstash/start/$', logaudit.logstash_start),
+    url(r'^logaudit/kibana/start/$',logaudit.kibana_start),
+
+    #访问控制
+    url(r'^accesscontrol/sentry/start/$', accesscontrol.sentry_start),
+    url(r'^accesscontrol/hue/start/$', accesscontrol.hue_start),
 ]

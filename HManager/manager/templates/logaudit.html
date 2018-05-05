@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+<table class="table table-striped">  
+    <thead>
+        <tr>
+            <th></th> 
+            <th></th>  
+            <th></th>         
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>启动elasticsearch组件</td>
+            <td>
+                <button id="elasticsearch_start" class="btn btn-primary btn-sm" >启动</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>启动logstash组件</td>
+            <td>
+                <button id="logstash_start" class="btn btn-primary btn-sm" >启动</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td>启动kibana组件</td>
+            <td>
+                <button id="kibana_start" class="btn btn-primary btn-sm" >启动</button>               
+            </td>
+            <td><a href="#" data-toggle="tooltip" data-placement="right" title="我是提示内容!" >            
+                <span  class="icon-question fr"></span>
+            </td>           
+        </tr>
+        <tr>
+            <td colspan="3">
+                <a href="http://10.251.0.25:5601">kibana页面</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}
+{% block scripts %}
+<script>
+    function get_wrapper(url){
+    $.ajax({
+        type:'GET',
+        url:url,
+        dataType:"JSON",
+        beforeSend:function(){
+            $("#loadgif").show();
+        },
+        success:function(ret){
+            if(ret.status){
+                alert("操作失败: "+ret.output);
+            }else{
+                if(ret.output){
+                   alert(ret.output); 
+                }else{
+                    alert("操作成功");
+                }
+            }
+        },
+        complete:function(){
+            $("#loadgif").hide();
+        }
+    })
+   };
+
+   $("#elasticsearch_start").click(function(){
+    var url='/logaudit/elasticsearch/start';
+    get_wrapper(url);
+   });
+
+   $("#logstash_start").click(function(){
+    var url='/logaudit/logstash/start';
+    get_wrapper(url);
+   });
+
+   $("#kibana_start").click(function(){
+    var url='/logaudit/kibana/start';
+    get_wrapper(url);
+   });
+   </script>
+{% endblock %}
